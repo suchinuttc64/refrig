@@ -1,0 +1,2617 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TechVoc LMS — ระบบการเรียนรู้วิชาชีพ ช่างแอร์และเครื่องทำความเย็น</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* =====================================================
+   TECHVOC LMS — DESIGN SYSTEM
+   Industrial-Tech Aesthetic | Blue + Orange + Gray
+   ===================================================== */
+:root {
+  --blue-50: #e8f4fd;
+  --blue-100: #bfdffa;
+  --blue-400: #2196f3;
+  --blue-600: #1565c0;
+  --blue-800: #0d47a1;
+  --blue-900: #082f6b;
+
+  --orange-50: #fff3e0;
+  --orange-100: #ffe0b2;
+  --orange-400: #ff9800;
+  --orange-600: #e65100;
+  --orange-800: #bf360c;
+
+  --gray-50: #f5f5f5;
+  --gray-100: #eeeeee;
+  --gray-200: #e0e0e0;
+  --gray-400: #9e9e9e;
+  --gray-600: #616161;
+  --gray-800: #212121;
+
+  --green-400: #4caf50;
+  --green-600: #2e7d32;
+  --red-400: #f44336;
+  --purple-400: #9c27b0;
+  --teal-400: #009688;
+
+  --bg-dark: #0a0e1a;
+  --bg-panel: #0f1628;
+  --bg-card: #141d35;
+  --bg-card2: #1a2540;
+  --border: rgba(255,255,255,0.08);
+  --border-bright: rgba(33,150,243,0.4);
+  --text-primary: #e8eaf6;
+  --text-secondary: #90a4ae;
+  --text-muted: #546e7a;
+
+  --font-main: 'Sarabun', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.4);
+  --shadow-md: 0 4px 20px rgba(0,0,0,0.5);
+  --shadow-blue: 0 0 20px rgba(33,150,243,0.15);
+
+  --sidebar-w: 260px;
+  --header-h: 64px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-main);
+  background: var(--bg-dark);
+  color: var(--text-primary);
+  min-height: 100vh;
+  font-size: 15px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-dark); }
+::-webkit-scrollbar-thumb { background: var(--gray-600); border-radius: 3px; }
+
+/* =====================================================
+   LAYOUT SHELL
+   ===================================================== */
+#app-shell {
+  display: grid;
+  grid-template-columns: var(--sidebar-w) 1fr;
+  grid-template-rows: var(--header-h) 1fr;
+  min-height: 100vh;
+}
+
+/* =====================================================
+   SIDEBAR
+   ===================================================== */
+#sidebar {
+  grid-row: 1 / -1;
+  background: var(--bg-panel);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  z-index: 100;
+  transition: transform 0.3s ease;
+}
+
+.sidebar-logo {
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo-icon {
+  width: 38px; height: 38px;
+  background: linear-gradient(135deg, var(--blue-600), var(--blue-400));
+  border-radius: var(--radius-sm);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+  box-shadow: var(--shadow-blue);
+}
+
+.logo-text { line-height: 1.2; }
+.logo-text strong { font-size: 14px; font-weight: 700; color: var(--text-primary); display: block; }
+.logo-text span { font-size: 11px; color: var(--text-muted); }
+
+.sidebar-section { padding: 16px 12px 8px; }
+.sidebar-section-label {
+  font-size: 10px; font-weight: 600; letter-spacing: 1.5px;
+  color: var(--text-muted); text-transform: uppercase;
+  padding: 0 8px 8px;
+}
+
+.nav-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 12px; border-radius: var(--radius-sm);
+  cursor: pointer; color: var(--text-secondary);
+  font-size: 14px; font-weight: 400;
+  transition: all 0.18s ease;
+  text-decoration: none;
+  border: none; background: none; width: 100%; text-align: left;
+  position: relative;
+}
+
+.nav-item:hover { background: rgba(255,255,255,0.05); color: var(--text-primary); }
+.nav-item.active {
+  background: rgba(33,150,243,0.12);
+  color: var(--blue-400);
+  font-weight: 600;
+}
+.nav-item.active::before {
+  content: '';
+  position: absolute; left: 0; top: 4px; bottom: 4px;
+  width: 3px; background: var(--blue-400);
+  border-radius: 0 2px 2px 0;
+}
+
+.nav-icon { font-size: 18px; width: 20px; text-align: center; flex-shrink: 0; }
+.nav-badge {
+  margin-left: auto; background: var(--orange-600);
+  color: #fff; font-size: 10px; font-weight: 700;
+  padding: 2px 7px; border-radius: 10px; min-width: 20px; text-align: center;
+}
+
+.sidebar-user {
+  margin-top: auto;
+  padding: 14px 16px;
+  border-top: 1px solid var(--border);
+  display: flex; align-items: center; gap: 10px;
+}
+
+.user-avatar {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--blue-600), var(--purple-400));
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 13px; color: #fff; flex-shrink: 0;
+}
+
+.user-info { flex: 1; min-width: 0; }
+.user-info strong { font-size: 13px; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.user-info span { font-size: 11px; color: var(--text-muted); }
+
+/* =====================================================
+   HEADER
+   ===================================================== */
+#header {
+  background: var(--bg-panel);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center;
+  padding: 0 24px; gap: 16px;
+  position: sticky; top: 0; z-index: 90;
+}
+
+.header-title { font-size: 16px; font-weight: 600; flex: 1; }
+
+.header-actions { display: flex; gap: 8px; align-items: center; }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 8px 16px; border-radius: var(--radius-sm);
+  font-family: var(--font-main); font-size: 13px; font-weight: 600;
+  cursor: pointer; border: none; transition: all 0.18s ease;
+  text-decoration: none;
+}
+
+.btn-icon {
+  padding: 8px; background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  cursor: pointer; color: var(--text-secondary);
+  transition: all 0.18s ease; font-size: 16px;
+  display: flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px;
+}
+.btn-icon:hover { background: rgba(255,255,255,0.1); color: var(--text-primary); }
+
+.btn-primary { background: var(--blue-600); color: #fff; }
+.btn-primary:hover { background: var(--blue-800); transform: translateY(-1px); }
+.btn-outline {
+  background: transparent; color: var(--blue-400);
+  border: 1px solid var(--blue-600);
+}
+.btn-outline:hover { background: rgba(33,150,243,0.1); }
+
+.notification-dot {
+  width: 8px; height: 8px; background: var(--orange-400);
+  border-radius: 50%; position: absolute; top: 6px; right: 6px;
+}
+
+/* =====================================================
+   MAIN CONTENT
+   ===================================================== */
+#main {
+  overflow-y: auto;
+  background: var(--bg-dark);
+}
+
+.page { display: none; animation: fadeIn 0.25s ease; }
+.page.active { display: block; }
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+.page-content { padding: 24px; max-width: 1200px; }
+
+/* =====================================================
+   CARDS & COMPONENTS
+   ===================================================== */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+}
+
+.card-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 16px;
+}
+.card-title { font-size: 15px; font-weight: 600; }
+.card-subtitle { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+
+/* Stat cards */
+.stat-card {
+  background: var(--bg-card2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 16px 18px;
+  display: flex; align-items: flex-start; gap: 12px;
+}
+.stat-icon {
+  width: 44px; height: 44px; border-radius: var(--radius-sm);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; flex-shrink: 0;
+}
+.stat-info { flex: 1; min-width: 0; }
+.stat-label { font-size: 12px; color: var(--text-muted); margin-bottom: 4px; }
+.stat-value { font-size: 26px; font-weight: 700; line-height: 1; }
+.stat-sub { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+
+/* Progress bar */
+.progress-wrap { }
+.progress-label { display: flex; justify-content: space-between; font-size: 12px; color: var(--text-secondary); margin-bottom: 6px; }
+.progress-bar { height: 6px; background: rgba(255,255,255,0.08); border-radius: 3px; overflow: hidden; }
+.progress-fill { height: 100%; border-radius: 3px; transition: width 0.8s ease; }
+.prog-blue { background: linear-gradient(90deg, var(--blue-600), var(--blue-400)); }
+.prog-orange { background: linear-gradient(90deg, var(--orange-600), var(--orange-400)); }
+.prog-green { background: linear-gradient(90deg, #2e7d32, #4caf50); }
+
+/* Badge */
+.badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 3px 10px; border-radius: 20px;
+  font-size: 11px; font-weight: 600;
+}
+.badge-blue { background: rgba(33,150,243,0.15); color: var(--blue-400); border: 1px solid rgba(33,150,243,0.3); }
+.badge-orange { background: rgba(255,152,0,0.15); color: var(--orange-400); border: 1px solid rgba(255,152,0,0.3); }
+.badge-green { background: rgba(76,175,80,0.15); color: var(--green-400); border: 1px solid rgba(76,175,80,0.3); }
+.badge-red { background: rgba(244,67,54,0.15); color: var(--red-400); border: 1px solid rgba(244,67,54,0.3); }
+.badge-purple { background: rgba(156,39,176,0.15); color: var(--purple-400); border: 1px solid rgba(156,39,176,0.3); }
+
+/* Tag */
+.tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; background: rgba(255,255,255,0.07); color: var(--text-secondary); }
+
+/* Section header */
+.section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+.section-title { font-size: 17px; font-weight: 700; }
+.section-subtitle { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+
+/* Divider */
+.divider { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+
+/* =====================================================
+   DASHBOARD PAGE
+   ===================================================== */
+.dashboard-hero {
+  background: linear-gradient(135deg, var(--bg-panel) 0%, rgba(21,101,192,0.15) 100%);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 28px 32px;
+  margin-bottom: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.dashboard-hero::before {
+  content: '';
+  position: absolute; right: -40px; top: -40px;
+  width: 220px; height: 220px;
+  background: radial-gradient(circle, rgba(33,150,243,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero-greeting { font-size: 13px; color: var(--text-muted); margin-bottom: 4px; }
+.hero-name { font-size: 26px; font-weight: 700; margin-bottom: 8px; }
+.hero-desc { font-size: 14px; color: var(--text-secondary); max-width: 520px; line-height: 1.7; }
+
+.hero-stats {
+  display: flex; gap: 24px; margin-top: 20px;
+  padding-top: 20px; border-top: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+.hero-stat-item { text-align: center; }
+.hero-stat-val { font-size: 22px; font-weight: 700; color: var(--blue-400); }
+.hero-stat-lbl { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+
+/* Units grid */
+.unit-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 18px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex; flex-direction: column; gap: 12px;
+  position: relative; overflow: hidden;
+}
+
+.unit-card:hover {
+  border-color: var(--border-bright);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-blue);
+}
+
+.unit-card::after {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 3px;
+}
+.unit-card.u1::after { background: var(--blue-400); }
+.unit-card.u2::after { background: var(--orange-400); }
+.unit-card.u3::after { background: var(--green-400); }
+.unit-card.u4::after { background: var(--purple-400); }
+.unit-card.u5::after { background: var(--teal-400); }
+.unit-card.u6::after { background: #e91e63; }
+.unit-card.u7::after { background: #ff5722; }
+.unit-card.u8::after { background: #795548; }
+
+.unit-num { font-size: 11px; color: var(--text-muted); font-weight: 600; letter-spacing: 1px; }
+.unit-title { font-size: 15px; font-weight: 700; line-height: 1.3; }
+.unit-desc { font-size: 12px; color: var(--text-secondary); line-height: 1.5; }
+.unit-meta { display: flex; gap: 12px; flex-wrap: wrap; }
+.unit-status { margin-top: auto; }
+
+/* Achievement row */
+.achievement-row {
+  display: flex; gap: 8px; flex-wrap: wrap;
+}
+.achievement-badge {
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  padding: 14px 12px; background: var(--bg-card2);
+  border: 1px solid var(--border); border-radius: var(--radius-md);
+  min-width: 90px; text-align: center; flex: 1;
+  transition: all 0.2s ease; cursor: default;
+}
+.achievement-badge.earned { border-color: rgba(255,152,0,0.4); background: rgba(255,152,0,0.05); }
+.achievement-badge:hover { transform: translateY(-2px); }
+.badge-emoji { font-size: 28px; }
+.badge-name { font-size: 11px; color: var(--text-secondary); font-weight: 600; }
+.badge-status { font-size: 10px; color: var(--text-muted); }
+
+/* Leaderboard */
+.leaderboard-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 14px; border-radius: var(--radius-sm);
+  transition: background 0.15s;
+}
+.leaderboard-item:hover { background: rgba(255,255,255,0.04); }
+.lb-rank { font-size: 13px; font-weight: 700; color: var(--text-muted); width: 28px; text-align: center; }
+.lb-rank.top1 { color: #ffd700; }
+.lb-rank.top2 { color: #c0c0c0; }
+.lb-rank.top3 { color: #cd7f32; }
+.lb-avatar {
+  width: 32px; height: 32px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700; color: #fff; flex-shrink: 0;
+}
+.lb-name { flex: 1; font-size: 13px; font-weight: 500; }
+.lb-xp { font-size: 13px; font-weight: 700; color: var(--orange-400); }
+
+/* Activity feed */
+.activity-item {
+  display: flex; gap: 12px; padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+.activity-item:last-child { border-bottom: none; }
+.activity-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  margin-top: 7px; flex-shrink: 0;
+}
+.activity-text { font-size: 13px; color: var(--text-secondary); }
+.activity-text strong { color: var(--text-primary); }
+.activity-time { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+
+/* =====================================================
+   UNIT / LESSON PAGE
+   ===================================================== */
+.lesson-layout { display: grid; grid-template-columns: 1fr 320px; gap: 20px; align-items: start; }
+
+.lesson-video-wrap {
+  background: #000;
+  border-radius: var(--radius-lg);
+  aspect-ratio: 16/9;
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+  border: 1px solid var(--border);
+}
+.video-placeholder {
+  display: flex; flex-direction: column; align-items: center; gap: 12px;
+  color: var(--text-muted);
+}
+.video-placeholder .play-btn {
+  width: 60px; height: 60px; border-radius: 50%;
+  background: rgba(33,150,243,0.2); border: 2px solid var(--blue-400);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px; cursor: pointer;
+  transition: all 0.2s ease;
+}
+.video-placeholder .play-btn:hover {
+  background: rgba(33,150,243,0.4); transform: scale(1.1);
+}
+
+.lesson-tabs { display: flex; gap: 4px; margin-bottom: 16px; flex-wrap: wrap; }
+.lesson-tab {
+  padding: 7px 16px; border-radius: var(--radius-sm);
+  font-size: 13px; cursor: pointer;
+  background: transparent; border: 1px solid var(--border);
+  color: var(--text-secondary); font-family: var(--font-main);
+  transition: all 0.18s ease;
+}
+.lesson-tab:hover { border-color: var(--blue-400); color: var(--blue-400); }
+.lesson-tab.active { background: var(--blue-600); border-color: var(--blue-600); color: #fff; }
+
+.lesson-tab-content { display: none; }
+.lesson-tab-content.active { display: block; animation: fadeIn 0.2s ease; }
+
+/* Topics list */
+.topic-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 14px; border-radius: var(--radius-sm);
+  cursor: pointer; transition: all 0.18s ease;
+  border: 1px solid transparent;
+}
+.topic-item:hover { background: rgba(255,255,255,0.04); border-color: var(--border); }
+.topic-item.active { background: rgba(33,150,243,0.1); border-color: rgba(33,150,243,0.3); }
+.topic-item.done .topic-num { background: var(--green-600); }
+.topic-num {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--bg-card2); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700; color: var(--text-muted);
+  flex-shrink: 0;
+}
+.topic-info { flex: 1; }
+.topic-name { font-size: 13px; font-weight: 500; }
+.topic-dur { font-size: 11px; color: var(--text-muted); }
+.topic-check { color: var(--green-400); font-size: 14px; }
+
+/* Quiz component */
+.quiz-question {
+  background: var(--bg-card2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  margin-bottom: 16px;
+}
+.q-num { font-size: 11px; color: var(--text-muted); margin-bottom: 8px; }
+.q-text { font-size: 15px; font-weight: 500; margin-bottom: 16px; }
+.q-options { display: flex; flex-direction: column; gap: 8px; }
+.q-option {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 14px; border-radius: var(--radius-sm);
+  border: 1px solid var(--border); cursor: pointer;
+  transition: all 0.18s ease; font-size: 13px;
+}
+.q-option:hover { border-color: var(--blue-400); background: rgba(33,150,243,0.05); }
+.q-option.selected { border-color: var(--blue-400); background: rgba(33,150,243,0.12); color: var(--blue-400); }
+.q-option.correct { border-color: var(--green-400); background: rgba(76,175,80,0.1); color: var(--green-400); }
+.q-option.wrong { border-color: var(--red-400); background: rgba(244,67,54,0.1); color: var(--red-400); }
+.q-radio {
+  width: 16px; height: 16px; border-radius: 50%;
+  border: 2px solid var(--border-bright); flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* Virtual Lab */
+.vlab-container {
+  background: #000d1a;
+  border: 1px solid rgba(33,150,243,0.3);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  font-family: var(--font-mono);
+  position: relative; overflow: hidden;
+}
+.vlab-container::before {
+  content: 'VIRTUAL LAB — INTERACTIVE SIMULATION';
+  position: absolute; top: 12px; left: 50%; transform: translateX(-50%);
+  font-size: 10px; letter-spacing: 2px; color: rgba(33,150,243,0.6);
+}
+
+.circuit-svg { width: 100%; max-width: 600px; margin: 0 auto; display: block; }
+
+.vlab-controls { margin-top: 16px; display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+.vlab-control-item { display: flex; flex-direction: column; gap: 4px; }
+.vlab-control-label { font-size: 10px; color: var(--text-muted); letter-spacing: 1px; }
+.vlab-control-val {
+  font-size: 20px; font-weight: 700; color: var(--blue-400);
+  font-family: var(--font-mono);
+}
+.vlab-control-unit { font-size: 11px; color: var(--text-muted); }
+
+.toggle-switch { position: relative; display: inline-flex; align-items: center; cursor: pointer; }
+.toggle-switch input { opacity: 0; width: 0; height: 0; }
+.toggle-track {
+  width: 44px; height: 24px; background: var(--gray-600);
+  border-radius: 12px; transition: 0.3s; position: relative;
+}
+.toggle-thumb {
+  position: absolute; left: 4px; top: 4px;
+  width: 16px; height: 16px; background: #fff;
+  border-radius: 50%; transition: 0.3s;
+}
+.toggle-switch input:checked + .toggle-track { background: var(--blue-400); }
+.toggle-switch input:checked + .toggle-track .toggle-thumb { transform: translateX(20px); }
+
+/* Meter gauge */
+.gauge-wrap {
+  position: relative; width: 120px; height: 70px; overflow: hidden;
+}
+.gauge-arc {
+  width: 140px; height: 140px; border-radius: 50%;
+  border: 10px solid transparent;
+  border-top-color: var(--blue-400); border-left-color: var(--blue-400);
+  position: absolute; top: 0; left: -10px;
+  transform: rotate(var(--deg, 135deg));
+  transition: transform 0.5s ease;
+  box-shadow: 0 0 10px rgba(33,150,243,0.4);
+}
+
+/* =====================================================
+   PORTFOLIO PAGE
+   ===================================================== */
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.portfolio-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.portfolio-card:hover {
+  border-color: var(--border-bright);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-blue);
+}
+.portfolio-thumb {
+  aspect-ratio: 16/9;
+  background: var(--bg-card2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 40px; position: relative;
+}
+.portfolio-thumb-label {
+  position: absolute; bottom: 8px; right: 8px;
+}
+.portfolio-body { padding: 14px; }
+.portfolio-title { font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+.portfolio-meta { font-size: 12px; color: var(--text-muted); }
+
+/* Upload area */
+.upload-zone {
+  border: 2px dashed rgba(33,150,243,0.3);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  text-align: center; cursor: pointer;
+  transition: all 0.2s ease;
+}
+.upload-zone:hover { border-color: var(--blue-400); background: rgba(33,150,243,0.04); }
+.upload-icon { font-size: 36px; margin-bottom: 12px; }
+.upload-text { font-size: 14px; color: var(--text-secondary); }
+.upload-hint { font-size: 12px; color: var(--text-muted); margin-top: 6px; }
+
+/* =====================================================
+   ANALYTICS PAGE
+   ===================================================== */
+.analytics-chart {
+  background: var(--bg-card2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  height: 200px;
+  display: flex; align-items: flex-end; gap: 8px;
+}
+.chart-bar-wrap { display: flex; flex-direction: column; align-items: center; gap: 4px; flex: 1; }
+.chart-bar {
+  width: 100%; border-radius: 4px 4px 0 0;
+  background: linear-gradient(180deg, var(--blue-400), var(--blue-600));
+  transition: height 0.6s ease;
+  min-height: 4px; position: relative;
+}
+.chart-bar:hover { filter: brightness(1.2); }
+.chart-bar-label { font-size: 10px; color: var(--text-muted); }
+
+/* Competency matrix */
+.comp-matrix { display: flex; flex-direction: column; gap: 10px; }
+.comp-row { display: flex; align-items: center; gap: 12px; }
+.comp-name { font-size: 12px; color: var(--text-secondary); width: 180px; flex-shrink: 0; }
+.comp-bar-wrap { flex: 1; height: 8px; background: rgba(255,255,255,0.08); border-radius: 4px; overflow: hidden; }
+.comp-fill { height: 100%; border-radius: 4px; transition: width 0.8s ease; }
+.comp-pct { font-size: 12px; font-weight: 600; width: 36px; text-align: right; }
+
+/* Student table */
+.data-table { width: 100%; border-collapse: collapse; }
+.data-table th {
+  padding: 10px 14px; font-size: 12px; font-weight: 600;
+  color: var(--text-muted); text-align: left;
+  border-bottom: 1px solid var(--border);
+  letter-spacing: 0.5px;
+}
+.data-table td {
+  padding: 12px 14px; font-size: 13px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.data-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+/* =====================================================
+   ASSIGNMENT PAGE
+   ===================================================== */
+.assignment-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  display: flex; gap: 16px; align-items: flex-start;
+  cursor: pointer; transition: all 0.2s ease;
+}
+.assignment-card:hover { border-color: var(--border-bright); }
+.assignment-icon {
+  width: 48px; height: 48px; border-radius: var(--radius-md);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; flex-shrink: 0;
+}
+.assignment-title { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+.assignment-meta { font-size: 12px; color: var(--text-muted); }
+.assignment-status { margin-top: 10px; }
+
+/* =====================================================
+   SAFETY PAGE
+   ===================================================== */
+.safety-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  border-left: 4px solid var(--orange-400);
+}
+.safety-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+.safety-icon { font-size: 24px; }
+.safety-title { font-size: 15px; font-weight: 700; }
+.safety-checklist { display: flex; flex-direction: column; gap: 10px; margin-top: 14px; }
+.safety-check-item {
+  display: flex; align-items: flex-start; gap: 10px;
+  font-size: 13px; color: var(--text-secondary);
+}
+.safety-check-item.checked { color: var(--text-primary); }
+.safety-checkbox {
+  width: 18px; height: 18px; border-radius: 4px;
+  border: 1px solid var(--border); flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; margin-top: 2px; transition: all 0.18s;
+}
+.safety-checkbox.checked { background: var(--green-600); border-color: var(--green-600); color: #fff; font-size: 11px; }
+
+/* =====================================================
+   CERT PAGE
+   ===================================================== */
+.certificate-card {
+  background: linear-gradient(135deg, #0d1b3e, #1a2a5e);
+  border: 2px solid rgba(255,215,0,0.3);
+  border-radius: var(--radius-xl);
+  padding: 40px;
+  text-align: center;
+  position: relative; overflow: hidden;
+  max-width: 600px; margin: 0 auto;
+}
+.cert-corner {
+  position: absolute; width: 80px; height: 80px;
+  opacity: 0.3;
+}
+.cert-corner.tl { top: 0; left: 0; border-top: 3px solid gold; border-left: 3px solid gold; border-radius: var(--radius-xl) 0 0 0; }
+.cert-corner.tr { top: 0; right: 0; border-top: 3px solid gold; border-right: 3px solid gold; border-radius: 0 var(--radius-xl) 0 0; }
+.cert-corner.bl { bottom: 0; left: 0; border-bottom: 3px solid gold; border-left: 3px solid gold; border-radius: 0 0 0 var(--radius-xl); }
+.cert-corner.br { bottom: 0; right: 0; border-bottom: 3px solid gold; border-right: 3px solid gold; border-radius: 0 0 var(--radius-xl) 0; }
+.cert-badge-icon { font-size: 56px; margin-bottom: 16px; }
+.cert-title { font-size: 13px; letter-spacing: 3px; color: rgba(255,215,0,0.8); margin-bottom: 8px; }
+.cert-name { font-size: 28px; font-weight: 700; margin-bottom: 6px; }
+.cert-course { font-size: 15px; color: var(--text-secondary); margin-bottom: 24px; }
+.cert-line { border: none; border-top: 1px solid rgba(255,215,0,0.2); margin: 20px 0; }
+.cert-footer { display: flex; justify-content: space-around; }
+.cert-sig { text-align: center; }
+.cert-sig-line { width: 120px; border-top: 1px solid rgba(255,255,255,0.3); margin: 0 auto 6px; }
+.cert-sig-name { font-size: 12px; color: var(--text-secondary); }
+
+/* =====================================================
+   REFLECTION PAGE
+   ===================================================== */
+.reflection-card {
+  background: var(--bg-card2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 18px;
+}
+.reflection-q { font-size: 14px; font-weight: 600; margin-bottom: 10px; }
+.reflection-textarea {
+  width: 100%; background: rgba(0,0,0,0.3);
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  color: var(--text-primary); font-family: var(--font-main);
+  font-size: 13px; padding: 10px 12px; resize: vertical;
+  min-height: 80px; transition: border-color 0.18s;
+}
+.reflection-textarea:focus { outline: none; border-color: var(--blue-400); }
+
+/* =====================================================
+   ADMIN PAGE
+   ===================================================== */
+.admin-section { margin-bottom: 28px; }
+.admin-toolbar {
+  display: flex; gap: 8px; flex-wrap: wrap; align-items: center;
+  margin-bottom: 16px;
+}
+.search-input {
+  background: var(--bg-card2); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); color: var(--text-primary);
+  font-family: var(--font-main); font-size: 13px;
+  padding: 8px 14px; width: 220px;
+}
+.search-input:focus { outline: none; border-color: var(--blue-400); }
+
+/* =====================================================
+   MOBILE SIDEBAR TOGGLE
+   ===================================================== */
+#mobile-toggle {
+  display: none; padding: 8px; background: transparent;
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  color: var(--text-secondary); cursor: pointer; font-size: 18px;
+}
+
+/* =====================================================
+   RESPONSIVE
+   ===================================================== */
+@media (max-width: 900px) {
+  #app-shell { grid-template-columns: 1fr; }
+  #sidebar {
+    position: fixed; left: -280px; top: 0; bottom: 0; z-index: 200;
+    width: var(--sidebar-w);
+    transition: transform 0.3s ease;
+  }
+  #sidebar.open { transform: translateX(280px); }
+  #header { grid-column: 1; }
+  #main { grid-column: 1; }
+  #mobile-toggle { display: flex; }
+  .grid-4 { grid-template-columns: repeat(2, 1fr); }
+  .grid-3 { grid-template-columns: 1fr 1fr; }
+  .lesson-layout { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 600px) {
+  .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+  .page-content { padding: 14px; }
+  .dashboard-hero { padding: 20px; }
+  .hero-stats { gap: 14px; }
+  .hero-name { font-size: 20px; }
+}
+
+/* =====================================================
+   OVERLAY & MODALS
+   ===================================================== */
+.overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,0.6); z-index: 150;
+  align-items: center; justify-content: center;
+}
+.overlay.open { display: flex; }
+.modal {
+  background: var(--bg-panel); border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 28px; max-width: 540px; width: 90%;
+  max-height: 90vh; overflow-y: auto;
+  animation: fadeIn 0.2s ease;
+}
+.modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.modal-title { font-size: 17px; font-weight: 700; }
+.modal-close { background: none; border: none; color: var(--text-muted); font-size: 20px; cursor: pointer; }
+.modal-close:hover { color: var(--text-primary); }
+
+/* XP toast */
+.xp-toast {
+  position: fixed; top: 80px; right: 20px; z-index: 300;
+  background: linear-gradient(135deg, #1a3a5c, #1565c0);
+  border: 1px solid var(--blue-400); border-radius: var(--radius-md);
+  padding: 12px 18px; color: #fff;
+  font-weight: 700; font-size: 14px;
+  box-shadow: var(--shadow-blue);
+  animation: toastIn 0.3s ease, toastOut 0.3s ease 2.5s forwards;
+  pointer-events: none;
+}
+@keyframes toastIn { from { opacity:0; transform: translateX(30px); } to { opacity:1; transform: translateX(0); } }
+@keyframes toastOut { from { opacity:1; } to { opacity:0; } }
+
+/* Glow pulse for active elements */
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(33,150,243,0); }
+  50% { box-shadow: 0 0 0 6px rgba(33,150,243,0.15); }
+}
+
+.pulse-glow { animation: pulse-glow 2s ease infinite; }
+</style>
+</head>
+<body>
+
+<div id="app-shell">
+
+  <!-- ======= SIDEBAR ======= -->
+  <aside id="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-icon">❄️</div>
+      <div class="logo-text">
+        <strong>TechVoc LMS</strong>
+        <span>ช่างแอร์ &amp; เครื่องทำความเย็น</span>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">หลัก</div>
+      <button class="nav-item active" onclick="showPage('dashboard')">
+        <span class="nav-icon">🏠</span> แดชบอร์ด
+      </button>
+      <button class="nav-item" onclick="showPage('units')">
+        <span class="nav-icon">📚</span> หน่วยการเรียน
+        <span class="nav-badge">8</span>
+      </button>
+      <button class="nav-item" onclick="showPage('assignments')">
+        <span class="nav-icon">📝</span> ใบงาน/การบ้าน
+        <span class="nav-badge">3</span>
+      </button>
+      <button class="nav-item" onclick="showPage('virtuallab')">
+        <span class="nav-icon">🔬</span> ห้องปฏิบัติการเสมือน
+      </button>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">การพัฒนา</div>
+      <button class="nav-item" onclick="showPage('portfolio')">
+        <span class="nav-icon">🗂️</span> แฟ้มสะสมผลงาน
+      </button>
+      <button class="nav-item" onclick="showPage('progress')">
+        <span class="nav-icon">📊</span> ความก้าวหน้า
+      </button>
+      <button class="nav-item" onclick="showPage('safety')">
+        <span class="nav-icon">⚠️</span> ความปลอดภัย
+      </button>
+      <button class="nav-item" onclick="showPage('reflection')">
+        <span class="nav-icon">💭</span> บันทึกสะท้อนคิด
+      </button>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">ผลสัมฤทธิ์</div>
+      <button class="nav-item" onclick="showPage('certificates')">
+        <span class="nav-icon">🏆</span> ประกาศนียบัตร
+      </button>
+      <button class="nav-item" onclick="showPage('leaderboard')">
+        <span class="nav-icon">🥇</span> การจัดอันดับ
+      </button>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">จัดการ</div>
+      <button class="nav-item" onclick="showPage('admin')">
+        <span class="nav-icon">⚙️</span> แผงผู้สอน
+      </button>
+      <button class="nav-item" onclick="showPage('analytics')">
+        <span class="nav-icon">📈</span> วิเคราะห์การเรียน
+      </button>
+    </div>
+
+    <div class="sidebar-user">
+      <div class="user-avatar" id="user-avatar-sidebar">นส</div>
+      <div class="user-info">
+        <strong id="sidebar-username">นายสมชาย ใจดี</strong>
+        <span>ระดับ 4 — เทคนิเชียน</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ======= HEADER ======= -->
+  <header id="header">
+    <button id="mobile-toggle" onclick="toggleSidebar()">☰</button>
+    <div class="header-title" id="page-title">แดชบอร์ด</div>
+    <div class="header-actions">
+      <div class="btn-icon" style="position:relative;" title="การแจ้งเตือน">
+        🔔
+        <span class="notification-dot"></span>
+      </div>
+      <button class="btn btn-primary" onclick="showPage('virtuallab')">🔬 เข้าห้องแล็บ</button>
+    </div>
+  </header>
+
+  <!-- ======= MAIN ======= -->
+  <main id="main">
+
+    <!-- ==================== DASHBOARD ==================== -->
+    <div class="page active" id="page-dashboard">
+      <div class="page-content">
+        <!-- Hero -->
+        <div class="dashboard-hero">
+          <div class="hero-greeting">สวัสดี, วันพฤหัสบดีที่ 14 พฤษภาคม 2568 🌤️</div>
+          <div class="hero-name">ยินดีต้อนรับกลับมา, <span id="welcome-name">นายสมชาย</span>!</div>
+          <div class="hero-desc">วันนี้คุณมี <strong>2 ใบงาน</strong> ที่รอส่ง และ <strong>1 แบบทดสอบ</strong> ที่ยังไม่เสร็จ มาเรียนรู้ต่อกันเลย!</div>
+          <div class="hero-stats">
+            <div class="hero-stat-item">
+              <div class="hero-stat-val" id="xp-display">2,450</div>
+              <div class="hero-stat-lbl">คะแนน XP</div>
+            </div>
+            <div class="hero-stat-item">
+              <div class="hero-stat-val">68%</div>
+              <div class="hero-stat-lbl">ความก้าวหน้า</div>
+            </div>
+            <div class="hero-stat-item">
+              <div class="hero-stat-val">6</div>
+              <div class="hero-stat-lbl">ป้ายความสำเร็จ</div>
+            </div>
+            <div class="hero-stat-item">
+              <div class="hero-stat-val">94%</div>
+              <div class="hero-stat-lbl">การเข้าเรียน</div>
+            </div>
+            <div class="hero-stat-item">
+              <div class="hero-stat-val">#3</div>
+              <div class="hero-stat-lbl">อันดับในชั้น</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stats row -->
+        <div class="grid-4" style="margin-bottom:24px">
+          <div class="stat-card">
+            <div class="stat-icon" style="background:rgba(33,150,243,0.12)">📚</div>
+            <div class="stat-info">
+              <div class="stat-label">หน่วยที่เสร็จแล้ว</div>
+              <div class="stat-value">5/8</div>
+              <div class="stat-sub">+1 หน่วยสัปดาห์นี้</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="background:rgba(255,152,0,0.12)">📝</div>
+            <div class="stat-info">
+              <div class="stat-label">ใบงานที่ส่งแล้ว</div>
+              <div class="stat-value">11/16</div>
+              <div class="stat-sub">3 ใบงานรอตรวจ</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="background:rgba(76,175,80,0.12)">✅</div>
+            <div class="stat-info">
+              <div class="stat-label">คะแนนเฉลี่ย</div>
+              <div class="stat-value">78%</div>
+              <div class="stat-sub">↑ 5% จากเดือนก่อน</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="background:rgba(156,39,176,0.12)">🔬</div>
+            <div class="stat-info">
+              <div class="stat-label">แล็บที่ทำแล้ว</div>
+              <div class="stat-value">9/12</div>
+              <div class="stat-sub">เสร็จครบ 75%</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main Grid -->
+        <div class="grid-2" style="gap:20px;margin-bottom:24px">
+          <!-- Continue Learning -->
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">เรียนต่อจากเดิม</div>
+                <div class="card-subtitle">หน่วยที่ 5 — ระบบไฟฟ้าของเครื่องทำความเย็น</div>
+              </div>
+            </div>
+            <div style="background:var(--bg-card2);border-radius:var(--radius-md);padding:14px;margin-bottom:14px;">
+              <div style="font-size:13px;color:var(--text-muted);margin-bottom:4px;">หัวข้อปัจจุบัน</div>
+              <div style="font-size:14px;font-weight:600;margin-bottom:10px;">⚡ วงจรไฟฟ้าคอมเพรสเซอร์และการทดสอบ</div>
+              <div class="progress-wrap">
+                <div class="progress-label"><span>ความก้าวหน้า</span><span>60%</span></div>
+                <div class="progress-bar"><div class="progress-fill prog-blue" style="width:60%"></div></div>
+              </div>
+            </div>
+            <button class="btn btn-primary" style="width:100%" onclick="showPage('lesson')">
+              ▶ เรียนต่อ — หัวข้อที่ 3
+            </button>
+          </div>
+
+          <!-- Today's Tasks -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">กิจกรรมวันนี้</div>
+              <span class="badge badge-orange">4 รายการ</span>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:8px;">
+              <div class="activity-item">
+                <div class="activity-dot" style="background:var(--orange-400)"></div>
+                <div>
+                  <div class="activity-text">📝 <strong>ใบงานที่ 9</strong> — การวิเคราะห์วงจรไฟฟ้า (ครบกำหนดวันนี้!)</div>
+                  <div class="activity-time">⏰ ครบกำหนด 17:00 น.</div>
+                </div>
+              </div>
+              <div class="activity-item">
+                <div class="activity-dot" style="background:var(--blue-400)"></div>
+                <div>
+                  <div class="activity-text">📚 <strong>วิดีโอบทเรียน</strong> — การทดสอบคาปาซิเตอร์</div>
+                  <div class="activity-time">15 นาที</div>
+                </div>
+              </div>
+              <div class="activity-item">
+                <div class="activity-dot" style="background:var(--purple-400)"></div>
+                <div>
+                  <div class="activity-text">🔬 <strong>แล็บเสมือน</strong> — จำลองวงจรรีเลย์</div>
+                  <div class="activity-time">30 นาที</div>
+                </div>
+              </div>
+              <div class="activity-item">
+                <div class="activity-dot" style="background:var(--green-400)"></div>
+                <div>
+                  <div class="activity-text">💭 <strong>สะท้อนคิด</strong> — บันทึกการเรียนรู้วันนี้</div>
+                  <div class="activity-time">5 นาที</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Units Overview -->
+        <div class="section-header">
+          <div>
+            <div class="section-title">หน่วยการเรียนทั้งหมด</div>
+            <div class="section-subtitle">8 หน่วย — เสร็จแล้ว 5 หน่วย</div>
+          </div>
+          <button class="btn btn-outline" onclick="showPage('units')">ดูทั้งหมด →</button>
+        </div>
+        <div class="grid-4" style="margin-bottom:24px">
+          <!-- Units 1-8 -->
+          <div class="unit-card u1" onclick="openUnitModal(1)">
+            <div class="unit-num">หน่วยที่ 1</div>
+            <div class="unit-title">หลักการทำความเย็นเบื้องต้น</div>
+            <div class="unit-desc">ทฤษฎีการถ่ายเทความร้อน วัฏจักรทำความเย็น</div>
+            <div class="unit-meta"><span class="tag">2 ใบงาน</span><span class="tag">4 วิดีโอ</span></div>
+            <div class="unit-status">
+              <div class="progress-wrap">
+                <div class="progress-label"><span>เสร็จแล้ว</span><span>100%</span></div>
+                <div class="progress-bar"><div class="progress-fill prog-green" style="width:100%"></div></div>
+              </div>
+            </div>
+            <span class="badge badge-green">✓ ผ่านแล้ว</span>
+          </div>
+          <div class="unit-card u2" onclick="openUnitModal(2)">
+            <div class="unit-num">หน่วยที่ 2</div>
+            <div class="unit-title">ส่วนประกอบระบบทำความเย็น</div>
+            <div class="unit-desc">คอมเพรสเซอร์ คอนเดนเซอร์ ระเหย วาล์ว</div>
+            <div class="unit-meta"><span class="tag">2 ใบงาน</span><span class="tag">5 วิดีโอ</span></div>
+            <div class="unit-status">
+              <div class="progress-wrap">
+                <div class="progress-label"><span>เสร็จแล้ว</span><span>100%</span></div>
+                <div class="progress-bar"><div class="progress-fill prog-green" style="width:100%"></div></div>
+              </div>
+            </div>
+            <span class="badge badge-green">✓ ผ่านแล้ว</span>
+          </div>
+          <div class="unit-card u3" onclick="openUnitModal(3)">
+            <div class="unit-num">หน่วยที่ 3</div>
+            <div class="unit-title">สารทำความเย็น</div>
+            <div class="unit-desc">ประเภทสารทำความเย็น การจัดการ ความปลอดภัย</div>
+            <div class="unit-meta"><span class="tag">2 ใบงาน</span><span class="tag">3 วิดีโอ</span></div>
+            <div class="unit-status">
+              <div class="progress-wrap">
+                <div class="progress-label"><span>เสร็จแล้ว</span><span>100%</span></div>
+                <div class="progress-bar"><div class="progress-fill prog-green" style="width:100%"></div></div>
+              </div>
+            </div>
+            <span class="badge badge-green">✓ ผ่านแล้ว</span>
+          </div>
+          <div class="unit-card u4" onclick="openUnitModal(4)">
+            <div class="unit-num">หน่วยที่ 4</div>
+            <div class="unit-title">เครื่องมือวัดและทดสอบ</div>
+            <div class="unit-desc">มัลติมิเตอร์ เกจวัดแรงดัน เทอร์โมมิเตอร์</div>
+            <div class="unit-meta"><span class="tag">2 ใบงาน</span><span class="tag">4 วิดีโอ</span></div>
+            <div class="unit-status">
+              <div class="progress-wrap">
+                <div class="progress-label"><span>เสร็จแล้ว</span><span>100%</span></div>
+                <div class="progress-bar"><div class="progress-fill prog-green" style="width:100%"></div></div>
+              </div>
+            </div>
+            <span class="badge badge-green">✓ ผ่านแล้ว</span>
+          </div>
+          <div class="unit-card u5" onclick="openUnitModal(5)">
+            <div class="unit-num">หน่วยที่ 5</div>
+            <div class="unit-title">ระบบไฟฟ้าเครื่องทำความเย็น</div>
+            <div class="unit-desc">วงจรไฟฟ้า คอมเพรสเซอร์ รีเลย์ คาปาซิเตอร์</div>
+            <div class="unit-meta"><span class="tag">2 ใบงาน</span><span class="tag">5 วิดีโอ</span></div>
+            <div class="unit-status">
+              <div class="progress-wrap">
+                <div class="progress-label"><span>กำลังเรียน</span><span>60%</span></div>
+                <div class="progress-bar"><div class="progress-fill prog-blue" style="width:60%"></div></div>
+              </div>
+            </div>
+            <span class="badge badge-blue">⚡ กำลังเรียน</span>
+          </div>
+          <div class="unit-card u6" onclick="openUnitModal(6)">
+            <div class="unit-num">หน่วยที่ 6</div>
+            <div class="unit-title">การซ่อมบำรุงระบบ</div>
+            <div class="unit-desc">การตรวจสอบ ล้างระบบ เติมสาร ทดสอบรั่ว</div>
+            <div class="unit-meta"><span class="tag">2 ใบงาน</span><span class="tag">4 วิดีโอ</span></div>
+            <div class="unit-status">
+              <div class="progress-wrap">
+                <div class="progress-label"><span>ยังไม่เริ่ม</span><span>0%</span></div>
+                <div class="progress-bar"><div class="progress-fill prog-blue" style="width:0%"></div></div>
+              </div>
+            </div>
+            <span class="badge" style="background:rgba(255,255,255,0.06);color:var(--text-muted);border:1px solid var(--border)">🔒 ล็อค</span>
+          </div>
+          <div class="unit-card u7" onclick="openUnitModal(7)">
+            <div class="unit-num">หน่วยที่ 7</div>
+            <div class="unit-title">การวิเคราะห์และแก้ไขปัญหา</div>
+            <div class="unit-desc">ขั้นตอนการแก้ปัญหา การวินิจฉัยความผิดปกติ</div>
+            <div class="unit-meta"><span class="tag">2 ใบงาน</span><span class="tag">6 วิดีโอ</span></div>
+            <div class="unit-status">
+              <div class="progress-wrap">
+                <div class="progress-label"><span>ยังไม่เริ่ม</span><span>0%</span></div>
+                <div class="progress-bar"><div class="progress-fill prog-blue" style="width:0%"></div></div>
+              </div>
+            </div>
+            <span class="badge" style="background:rgba(255,255,255,0.06);color:var(--text-muted);border:1px solid var(--border)">🔒 ล็อค</span>
+          </div>
+          <div class="unit-card u8" onclick="openUnitModal(8)">
+            <div class="unit-num">หน่วยที่ 8</div>
+            <div class="unit-title">โปรเจกต์สิ้นปี</div>
+            <div class="unit-desc">ออกแบบและบำรุงรักษาระบบทำความเย็นจริง</div>
+            <div class="unit-meta"><span class="tag">2 ใบงาน</span><span class="tag">3 วิดีโอ</span></div>
+            <div class="unit-status">
+              <div class="progress-wrap">
+                <div class="progress-label"><span>ยังไม่เริ่ม</span><span>0%</span></div>
+                <div class="progress-bar"><div class="progress-fill prog-blue" style="width:0%"></div></div>
+              </div>
+            </div>
+            <span class="badge" style="background:rgba(255,255,255,0.06);color:var(--text-muted);border:1px solid var(--border)">🔒 ล็อค</span>
+          </div>
+        </div>
+
+        <!-- Achievements & Leaderboard -->
+        <div class="grid-2" style="gap:20px">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">ป้ายความสำเร็จ</div>
+              <span class="badge badge-orange">6/12 ป้าย</span>
+            </div>
+            <div class="achievement-row">
+              <div class="achievement-badge earned">
+                <div class="badge-emoji">🔧</div>
+                <div class="badge-name">ช่างฝึกหัด</div>
+                <div class="badge-status">ได้รับแล้ว</div>
+              </div>
+              <div class="achievement-badge earned">
+                <div class="badge-emoji">⚡</div>
+                <div class="badge-name">นักไฟฟ้า</div>
+                <div class="badge-status">ได้รับแล้ว</div>
+              </div>
+              <div class="achievement-badge earned">
+                <div class="badge-emoji">❄️</div>
+                <div class="badge-name">ผู้เชี่ยวชาญ</div>
+                <div class="badge-status">ได้รับแล้ว</div>
+              </div>
+              <div class="achievement-badge earned">
+                <div class="badge-emoji">🛡️</div>
+                <div class="badge-name">แชมป์ Safety</div>
+                <div class="badge-status">ได้รับแล้ว</div>
+              </div>
+              <div class="achievement-badge earned">
+                <div class="badge-emoji">🔍</div>
+                <div class="badge-name">นักวิเคราะห์</div>
+                <div class="badge-status">ได้รับแล้ว</div>
+              </div>
+              <div class="achievement-badge">
+                <div class="badge-emoji" style="filter:grayscale(1);opacity:0.4">🏆</div>
+                <div class="badge-name" style="color:var(--text-muted)">ปรมาจารย์</div>
+                <div class="badge-status">ล็อคอยู่</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">🏆 อันดับในชั้น</div>
+              <button class="btn btn-outline" onclick="showPage('leaderboard')" style="font-size:11px;padding:5px 12px">ดูทั้งหมด</button>
+            </div>
+            <div id="leaderboard-mini"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== LESSON PAGE ==================== -->
+    <div class="page" id="page-lesson">
+      <div class="page-content">
+        <div style="margin-bottom:16px;display:flex;gap:8px;align-items:center">
+          <button class="btn btn-outline" onclick="showPage('units')" style="font-size:12px;padding:6px 12px">← กลับ</button>
+          <span style="font-size:13px;color:var(--text-muted)">หน่วยที่ 5 › ระบบไฟฟ้าเครื่องทำความเย็น</span>
+        </div>
+
+        <div class="lesson-layout">
+          <!-- Left: Video + Content -->
+          <div>
+            <div class="lesson-video-wrap">
+              <div class="video-placeholder">
+                <div class="play-btn" onclick="showXP(50)">▶</div>
+                <div style="font-size:13px">วิดีโอ: วงจรไฟฟ้าคอมเพรสเซอร์และการทดสอบ</div>
+                <div style="font-size:11px;color:var(--text-muted)">ระยะเวลา: 18:30 นาที</div>
+              </div>
+            </div>
+
+            <div style="margin-top:16px">
+              <div class="lesson-tabs">
+                <button class="lesson-tab active" onclick="switchTab(this,'tab-theory')">📖 ทฤษฎี</button>
+                <button class="lesson-tab" onclick="switchTab(this,'tab-demo')">🎬 สาธิต</button>
+                <button class="lesson-tab" onclick="switchTab(this,'tab-quiz')">📋 แบบทดสอบ</button>
+                <button class="lesson-tab" onclick="switchTab(this,'tab-worksheet')">📝 ใบงาน</button>
+                <button class="lesson-tab" onclick="switchTab(this,'tab-reflect')">💭 สะท้อนคิด</button>
+              </div>
+
+              <!-- Theory Tab -->
+              <div class="lesson-tab-content active" id="tab-theory">
+                <div class="card" style="margin-bottom:12px">
+                  <div style="font-size:13px;color:var(--text-muted);margin-bottom:4px">📚 ไมโครเลิร์นนิง — หัวข้อที่ 1 จาก 4</div>
+                  <div style="font-size:17px;font-weight:700;margin-bottom:12px">⚡ วงจรไฟฟ้าในระบบทำความเย็น</div>
+                  <p style="font-size:14px;color:var(--text-secondary);line-height:1.8;margin-bottom:14px">
+                    ระบบไฟฟ้าของตู้เย็นและเครื่องปรับอากาศประกอบด้วยส่วนประกอบหลายส่วน ได้แก่ <strong style="color:var(--blue-400)">คอมเพรสเซอร์</strong>, <strong style="color:var(--orange-400)">รีเลย์</strong>, <strong style="color:var(--green-400)">คาปาซิเตอร์</strong> และ <strong style="color:var(--purple-400)">เทอร์โมสตัท</strong>
+                  </p>
+                  <!-- Interactive diagram -->
+                  <div style="background:var(--bg-card2);border-radius:var(--radius-md);padding:20px;text-align:center;">
+                    <div style="font-size:12px;color:var(--text-muted);margin-bottom:12px;letter-spacing:1px">แผนผังวงจรไฟฟ้าเชิงโต้ตอบ — คลิกส่วนประกอบเพื่อดูข้อมูล</div>
+                    <svg viewBox="0 0 500 200" style="width:100%;max-width:480px;font-family:var(--font-main)" id="circuit-diagram">
+                      <!-- Power source -->
+                      <rect x="10" y="75" width="60" height="50" rx="6" fill="rgba(255,152,0,0.15)" stroke="rgba(255,152,0,0.6)" stroke-width="1.5"/>
+                      <text x="40" y="97" text-anchor="middle" fill="#ff9800" font-size="10" font-weight="600">220V</text>
+                      <text x="40" y="110" text-anchor="middle" fill="#ff9800" font-size="9">แหล่งจ่าย</text>
+                      <!-- Relay -->
+                      <rect x="130" y="60" width="70" height="60" rx="6" fill="rgba(156,39,176,0.15)" stroke="rgba(156,39,176,0.5)" stroke-width="1.5" class="circuit-part" onclick="showPartInfo('relay')" style="cursor:pointer"/>
+                      <text x="165" y="86" text-anchor="middle" fill="#ce93d8" font-size="10" font-weight="600">รีเลย์</text>
+                      <text x="165" y="100" text-anchor="middle" fill="#ce93d8" font-size="9">Relay</text>
+                      <!-- Capacitor -->
+                      <rect x="130" y="140" width="70" height="45" rx="6" fill="rgba(33,150,243,0.15)" stroke="rgba(33,150,243,0.5)" stroke-width="1.5" class="circuit-part" onclick="showPartInfo('cap')" style="cursor:pointer"/>
+                      <text x="165" y="160" text-anchor="middle" fill="#64b5f6" font-size="10" font-weight="600">คาปาซิเตอร์</text>
+                      <text x="165" y="174" text-anchor="middle" fill="#64b5f6" font-size="9">Capacitor</text>
+                      <!-- Compressor -->
+                      <rect x="280" y="55" width="80" height="90" rx="8" fill="rgba(255,87,34,0.15)" stroke="rgba(255,87,34,0.6)" stroke-width="2" class="circuit-part" onclick="showPartInfo('comp')" style="cursor:pointer"/>
+                      <text x="320" y="90" text-anchor="middle" fill="#ff7043" font-size="11" font-weight="700">คอมเพรสเซอร์</text>
+                      <text x="320" y="105" text-anchor="middle" fill="#ff7043" font-size="9">Compressor</text>
+                      <text x="320" y="120" text-anchor="middle" fill="#ff7043" font-size="9">⚡ 220V / 5A</text>
+                      <!-- Thermostat -->
+                      <rect x="420" y="75" width="65" height="50" rx="6" fill="rgba(76,175,80,0.15)" stroke="rgba(76,175,80,0.5)" stroke-width="1.5" class="circuit-part" onclick="showPartInfo('thermo')" style="cursor:pointer"/>
+                      <text x="452" y="97" text-anchor="middle" fill="#81c784" font-size="10" font-weight="600">เทอร์โม</text>
+                      <text x="452" y="110" text-anchor="middle" fill="#81c784" font-size="9">สตัท</text>
+                      <!-- Wires -->
+                      <line x1="70" y1="100" x2="130" y2="90" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
+                      <line x1="200" y1="90" x2="280" y2="90" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
+                      <line x1="165" y1="120" x2="165" y2="140" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" stroke-dasharray="4 2"/>
+                      <line x1="360" y1="100" x2="420" y2="100" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
+                    </svg>
+                    <div id="part-info" style="margin-top:12px;font-size:12px;color:var(--text-secondary);min-height:32px;padding:8px;background:rgba(0,0,0,0.2);border-radius:6px;">
+                      👆 คลิกที่ส่วนประกอบในแผนผังเพื่อดูรายละเอียด
+                    </div>
+                  </div>
+                </div>
+
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+                  <div class="card" style="padding:14px">
+                    <div style="font-size:13px;font-weight:600;margin-bottom:8px">🎯 จุดประสงค์การเรียนรู้</div>
+                    <ul style="font-size:12px;color:var(--text-secondary);line-height:2;padding-left:16px">
+                      <li>อธิบายหลักการวงจรไฟฟ้าตู้เย็นได้</li>
+                      <li>ระบุส่วนประกอบทางไฟฟ้าได้ถูกต้อง</li>
+                      <li>ทดสอบรีเลย์และคาปาซิเตอร์ได้</li>
+                      <li>วิเคราะห์ปัญหาวงจรไฟฟ้าได้</li>
+                    </ul>
+                  </div>
+                  <div class="card" style="padding:14px">
+                    <div style="font-size:13px;font-weight:600;margin-bottom:8px">⚠️ ข้อควรระวัง</div>
+                    <ul style="font-size:12px;color:var(--orange-400);line-height:2;padding-left:16px">
+                      <li>ตัดไฟก่อนทุกครั้งที่ทำงาน</li>
+                      <li>ตรวจสอบแรงดันไฟฟ้าก่อน</li>
+                      <li>สวมอุปกรณ์ป้องกันเสมอ</li>
+                      <li>ห้ามทำงานคนเดียวกับไฟแรงสูง</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Demo Tab -->
+              <div class="lesson-tab-content" id="tab-demo">
+                <div class="card">
+                  <div class="card-title" style="margin-bottom:14px">🎬 วิดีโอสาธิต</div>
+                  <div style="display:flex;flex-direction:column;gap:10px">
+                    <div class="topic-item active">
+                      <div class="topic-num">1</div>
+                      <div class="topic-info">
+                        <div class="topic-name">การใช้มัลติมิเตอร์วัดแรงดัน</div>
+                        <div class="topic-dur">⏱ 8 นาที</div>
+                      </div>
+                      <div>▶ เล่น</div>
+                    </div>
+                    <div class="topic-item">
+                      <div class="topic-num">2</div>
+                      <div class="topic-info">
+                        <div class="topic-name">การทดสอบรีเลย์คอมเพรสเซอร์</div>
+                        <div class="topic-dur">⏱ 12 นาที</div>
+                      </div>
+                      <div style="color:var(--text-muted)">▶ เล่น</div>
+                    </div>
+                    <div class="topic-item">
+                      <div class="topic-num">3</div>
+                      <div class="topic-info">
+                        <div class="topic-name">การวัดค่าคาปาซิเตอร์</div>
+                        <div class="topic-dur">⏱ 10 นาที</div>
+                      </div>
+                      <div style="color:var(--text-muted)">▶ เล่น</div>
+                    </div>
+                    <div class="topic-item">
+                      <div class="topic-num">4</div>
+                      <div class="topic-info">
+                        <div class="topic-name">ขั้นตอนความปลอดภัยทางไฟฟ้า</div>
+                        <div class="topic-dur">⏱ 6 นาที</div>
+                      </div>
+                      <div style="color:var(--text-muted)">▶ เล่น</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Quiz Tab -->
+              <div class="lesson-tab-content" id="tab-quiz">
+                <div style="margin-bottom:14px;display:flex;justify-content:space-between;align-items:center">
+                  <div style="font-size:15px;font-weight:700">📋 แบบทดสอบ — หน่วยที่ 5</div>
+                  <span class="badge badge-blue">5 ข้อ</span>
+                </div>
+                <div id="quiz-container"></div>
+                <button class="btn btn-primary" style="margin-top:16px" onclick="submitQuiz()">ส่งคำตอบ ✓</button>
+              </div>
+
+              <!-- Worksheet Tab -->
+              <div class="lesson-tab-content" id="tab-worksheet">
+                <div class="card" style="margin-bottom:14px">
+                  <div class="card-header">
+                    <div>
+                      <div class="card-title">📝 ใบงานที่ 9 — การวิเคราะห์วงจรไฟฟ้า</div>
+                      <div class="card-subtitle">หน่วยที่ 5 • ครบกำหนด: 14 พ.ค. 2568</div>
+                    </div>
+                    <span class="badge badge-orange">⏰ ใกล้ครบกำหนด</span>
+                  </div>
+                  <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;margin-bottom:14px">
+                    ให้นักเรียนทำการวัดและทดสอบส่วนประกอบทางไฟฟ้าของตู้เย็น จากนั้นบันทึกผลลงในใบงาน พร้อมถ่ายภาพหลักฐาน
+                  </p>
+                  <div class="upload-zone" onclick="showXP(30)">
+                    <div class="upload-icon">📤</div>
+                    <div class="upload-text">อัปโหลดรูปภาพ / วิดีโอ / PDF</div>
+                    <div class="upload-hint">รองรับ JPG, PNG, MP4, PDF ขนาดไม่เกิน 50MB</div>
+                  </div>
+                  <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">
+                    <div style="background:var(--bg-card2);border:1px solid var(--border);border-radius:6px;padding:8px 12px;display:flex;gap:8px;align-items:center;font-size:12px;">
+                      📷 รูปการวัดค่า.jpg <span style="color:var(--green-400)">✓</span>
+                    </div>
+                    <div style="background:var(--bg-card2);border:1px solid var(--border);border-radius:6px;padding:8px 12px;display:flex;gap:8px;align-items:center;font-size:12px;">
+                      📄 รายงาน.pdf <span style="color:var(--green-400)">✓</span>
+                    </div>
+                  </div>
+                </div>
+                <button class="btn btn-primary" onclick="showXP(100)">ส่งใบงาน ✓</button>
+              </div>
+
+              <!-- Reflect Tab -->
+              <div class="lesson-tab-content" id="tab-reflect">
+                <div class="card">
+                  <div class="card-title" style="margin-bottom:16px">💭 บันทึกสะท้อนคิด</div>
+                  <div style="display:flex;flex-direction:column;gap:14px">
+                    <div class="reflection-card">
+                      <div class="reflection-q">1. วันนี้คุณเรียนรู้อะไรบ้าง?</div>
+                      <textarea class="reflection-textarea" placeholder="เขียนสิ่งที่คุณได้เรียนรู้..."></textarea>
+                    </div>
+                    <div class="reflection-card">
+                      <div class="reflection-q">2. พบปัญหาอะไรระหว่างการเรียน?</div>
+                      <textarea class="reflection-textarea" placeholder="ปัญหาที่พบและวิธีแก้ไข..."></textarea>
+                    </div>
+                    <div class="reflection-card">
+                      <div class="reflection-q">3. ทักษะใดที่ต้องฝึกเพิ่มเติม?</div>
+                      <textarea class="reflection-textarea" placeholder="ทักษะที่ต้องพัฒนา..."></textarea>
+                    </div>
+                    <button class="btn btn-primary" onclick="showXP(20)">บันทึก ✓</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Sidebar -->
+          <div style="display:flex;flex-direction:column;gap:16px">
+            <!-- Progress -->
+            <div class="card">
+              <div class="card-title" style="margin-bottom:12px">ความก้าวหน้าหน่วยนี้</div>
+              <div style="display:flex;flex-direction:column;gap:10px">
+                <div class="progress-wrap">
+                  <div class="progress-label"><span>📖 ทฤษฎี</span><span>80%</span></div>
+                  <div class="progress-bar"><div class="progress-fill prog-blue" style="width:80%"></div></div>
+                </div>
+                <div class="progress-wrap">
+                  <div class="progress-label"><span>🔬 แล็บ</span><span>50%</span></div>
+                  <div class="progress-bar"><div class="progress-fill prog-orange" style="width:50%"></div></div>
+                </div>
+                <div class="progress-wrap">
+                  <div class="progress-label"><span>📝 ใบงาน</span><span>50%</span></div>
+                  <div class="progress-bar"><div class="progress-fill prog-green" style="width:50%"></div></div>
+                </div>
+                <div class="progress-wrap">
+                  <div class="progress-label"><span>📋 แบบทดสอบ</span><span>0%</span></div>
+                  <div class="progress-bar"><div class="progress-fill prog-blue" style="width:0%"></div></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Topics list -->
+            <div class="card">
+              <div class="card-title" style="margin-bottom:12px">หัวข้อการเรียน</div>
+              <div id="topics-list"></div>
+            </div>
+
+            <!-- XP -->
+            <div class="card" style="text-align:center;background:linear-gradient(135deg,rgba(21,101,192,0.2),rgba(33,150,243,0.05))">
+              <div style="font-size:11px;color:var(--text-muted);letter-spacing:1px;margin-bottom:6px">คะแนน XP ปัจจุบัน</div>
+              <div style="font-size:32px;font-weight:700;color:var(--blue-400)" id="lesson-xp">2,450</div>
+              <div style="font-size:11px;color:var(--text-muted)">ระดับ 4 — เทคนิเชียน</div>
+              <div class="progress-wrap" style="margin-top:10px">
+                <div class="progress-label"><span>สู่ระดับ 5</span><span>550 XP</span></div>
+                <div class="progress-bar"><div class="progress-fill prog-blue" style="width:68%"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== VIRTUAL LAB ==================== -->
+    <div class="page" id="page-virtuallab">
+      <div class="page-content">
+        <div class="section-header" style="margin-bottom:20px">
+          <div>
+            <div class="section-title">🔬 ห้องปฏิบัติการเสมือน</div>
+            <div class="section-subtitle">จำลองการทำงานระบบไฟฟ้าและทำความเย็น</div>
+          </div>
+          <span class="badge badge-blue pulse-glow">INTERACTIVE</span>
+        </div>
+
+        <div class="vlab-container" style="margin-bottom:20px">
+          <div style="margin-top:24px;">
+            <div style="text-align:center;margin-bottom:20px;font-size:13px;color:rgba(33,150,243,0.8);letter-spacing:1px;">
+              วงจรจำลองระบบตู้เย็น — คลิกสวิตช์เพื่อเริ่มการทำงาน
+            </div>
+            <!-- Animated refrigeration circuit -->
+            <svg id="lab-svg" viewBox="0 0 600 280" style="width:100%;max-width:580px;margin:0 auto;display:block;font-family:var(--font-mono)">
+              <!-- Compressor -->
+              <rect x="40" y="90" width="100" height="80" rx="8" fill="rgba(255,87,34,0.15)" stroke="rgba(255,87,34,0.6)" stroke-width="2"/>
+              <text x="90" y="126" text-anchor="middle" fill="#ff7043" font-size="11" font-weight="600">คอมเพรสเซอร์</text>
+              <text x="90" y="142" text-anchor="middle" fill="#ff7043" font-size="10">220V / 5A</text>
+              <circle id="comp-indicator" cx="90" cy="100" r="6" fill="#333" stroke="rgba(255,87,34,0.4)" stroke-width="1.5"/>
+              <!-- Condenser -->
+              <rect x="220" y="30" width="100" height="70" rx="8" fill="rgba(255,152,0,0.12)" stroke="rgba(255,152,0,0.5)" stroke-width="1.5"/>
+              <text x="270" y="62" text-anchor="middle" fill="#ffb300" font-size="11" font-weight="600">คอนเดนเซอร์</text>
+              <text x="270" y="77" text-anchor="middle" fill="#ffb300" font-size="9">ปล่อยความร้อน</text>
+              <!-- Evaporator -->
+              <rect x="220" y="170" width="100" height="70" rx="8" fill="rgba(33,150,243,0.12)" stroke="rgba(33,150,243,0.5)" stroke-width="1.5"/>
+              <text x="270" y="202" text-anchor="middle" fill="#64b5f6" font-size="11" font-weight="600">อีวาโปเรเตอร์</text>
+              <text x="270" y="217" text-anchor="middle" fill="#64b5f6" font-size="9">ดูดซับความร้อน</text>
+              <!-- Expansion valve -->
+              <rect x="400" y="100" width="80" height="60" rx="8" fill="rgba(76,175,80,0.12)" stroke="rgba(76,175,80,0.5)" stroke-width="1.5"/>
+              <text x="440" y="127" text-anchor="middle" fill="#81c784" font-size="10" font-weight="600">วาล์วขยาย</text>
+              <text x="440" y="142" text-anchor="middle" fill="#81c784" font-size="9">Expansion</text>
+              <!-- Pipes -->
+              <path id="pipe-hot" d="M140 110 L270 100 L270 65" fill="none" stroke="rgba(255,87,34,0.5)" stroke-width="4" stroke-linecap="round"/>
+              <path id="pipe-cold" d="M270 205 L270 240 L90 240 L90 170" fill="none" stroke="rgba(33,150,243,0.5)" stroke-width="4" stroke-linecap="round"/>
+              <path d="M320 65 L440 65 L440 100" fill="none" stroke="rgba(255,152,0,0.5)" stroke-width="3" stroke-linecap="round"/>
+              <path d="M440 160 L440 205 L320 205" fill="none" stroke="rgba(76,175,80,0.5)" stroke-width="3" stroke-linecap="round"/>
+              <!-- Flow indicator dots (animated) -->
+              <circle id="flow1" r="5" fill="#ff7043" opacity="0.8"/>
+              <circle id="flow2" r="5" fill="#64b5f6" opacity="0.8"/>
+              <!-- Temp readouts -->
+              <text id="temp-hot" x="270" y="20" text-anchor="middle" fill="#ffb300" font-size="12" font-weight="700">+60°C</text>
+              <text id="temp-cold" x="270" y="260" text-anchor="middle" fill="#64b5f6" font-size="12" font-weight="700">-5°C</text>
+              <!-- Power indicator -->
+              <rect x="500" y="110" width="80" height="40" rx="6" fill="rgba(0,0,0,0.4)" stroke="var(--border)" stroke-width="1"/>
+              <text x="540" y="128" text-anchor="middle" fill="var(--text-muted)" font-size="9">สถานะ</text>
+              <text id="power-status" x="540" y="142" text-anchor="middle" fill="#f44336" font-size="11" font-weight="700">OFF</text>
+            </svg>
+
+            <div class="vlab-controls">
+              <div class="vlab-control-item" style="flex:1">
+                <div class="vlab-control-label">สถานะคอมเพรสเซอร์</div>
+                <label class="toggle-switch" onclick="toggleCompressor()">
+                  <input type="checkbox" id="comp-switch">
+                  <div class="toggle-track"><div class="toggle-thumb"></div></div>
+                </label>
+              </div>
+              <div class="vlab-control-item">
+                <div class="vlab-control-label">อุณหภูมิตั้งค่า</div>
+                <div class="vlab-control-val" id="set-temp">18</div>
+                <div class="vlab-control-unit">°C</div>
+              </div>
+              <div class="vlab-control-item">
+                <div class="vlab-control-label">แรงดันไฟฟ้า</div>
+                <div class="vlab-control-val" id="voltage-val">--</div>
+                <div class="vlab-control-unit">V</div>
+              </div>
+              <div class="vlab-control-item">
+                <div class="vlab-control-label">กระแสไฟฟ้า</div>
+                <div class="vlab-control-val" id="current-val">--</div>
+                <div class="vlab-control-unit">A</div>
+              </div>
+              <div class="vlab-control-item">
+                <div class="vlab-control-label">อุณหภูมิจริง</div>
+                <div class="vlab-control-val" id="real-temp">--</div>
+                <div class="vlab-control-unit">°C</div>
+              </div>
+            </div>
+
+            <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
+              <button class="btn btn-outline" onclick="measureVoltage()">⚡ วัดแรงดัน</button>
+              <button class="btn btn-outline" onclick="measureCurrent()">🔌 วัดกระแส</button>
+              <button class="btn btn-outline" onclick="testRelay()">🔘 ทดสอบรีเลย์</button>
+              <button class="btn btn-outline" onclick="testCapacitor()">⚡ ทดสอบคาปาซิเตอร์</button>
+              <button class="btn btn-outline" onclick="injectFault()">⚠️ จำลองความผิดปกติ</button>
+              <button class="btn btn-primary" onclick="showXP(50)">📝 บันทึกผล</button>
+            </div>
+
+            <!-- Lab log -->
+            <div id="lab-log" style="margin-top:14px;background:rgba(0,0,0,0.5);border-radius:8px;padding:14px;font-size:12px;max-height:140px;overflow-y:auto;color:#80cbc4;font-family:var(--font-mono);">
+              <div style="color:rgba(33,150,243,0.6);margin-bottom:6px">[ ระบบแล็บเสมือน v2.1 — พร้อมใช้งาน ]</div>
+              <div>$ รอการดำเนินการ...</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Other lab modules -->
+        <div class="grid-3" style="gap:14px">
+          <div class="card" style="cursor:pointer" onclick="showXP(20)">
+            <div style="font-size:24px;margin-bottom:8px">🔄</div>
+            <div style="font-size:14px;font-weight:600;margin-bottom:4px">วัฏจักรทำความเย็น</div>
+            <div style="font-size:12px;color:var(--text-secondary)">จำลองและอนิเมชั่นการไหลของสารทำความเย็น</div>
+          </div>
+          <div class="card" style="cursor:pointer" onclick="showXP(20)">
+            <div style="font-size:24px;margin-bottom:8px">🔧</div>
+            <div style="font-size:14px;font-weight:600;margin-bottom:4px">การวินิจฉัยปัญหา</div>
+            <div style="font-size:12px;color:var(--text-secondary)">ฝึกการแก้ปัญหาจากอาการผิดปกติต่างๆ</div>
+          </div>
+          <div class="card" style="cursor:pointer" onclick="showXP(20)">
+            <div style="font-size:24px;margin-bottom:8px">📐</div>
+            <div style="font-size:14px;font-weight:600;margin-bottom:4px">การต่อวงจรไฟฟ้า</div>
+            <div style="font-size:12px;color:var(--text-secondary)">ต่อวงจรจำลองและทดสอบด้วยมัลติมิเตอร์</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== UNITS ==================== -->
+    <div class="page" id="page-units">
+      <div class="page-content">
+        <div class="section-header"><div class="section-title">📚 หน่วยการเรียนทั้งหมด</div></div>
+        <div id="units-full-list" style="display:flex;flex-direction:column;gap:14px"></div>
+      </div>
+    </div>
+
+    <!-- ==================== ASSIGNMENTS ==================== -->
+    <div class="page" id="page-assignments">
+      <div class="page-content">
+        <div class="section-header">
+          <div>
+            <div class="section-title">📝 ใบงานและการบ้านทั้งหมด</div>
+            <div class="section-subtitle">16 ใบงาน — ส่งแล้ว 11 ใบ</div>
+          </div>
+          <div style="display:flex;gap:8px">
+            <span class="badge badge-orange">รอส่ง 3</span>
+            <span class="badge badge-blue">รอตรวจ 2</span>
+          </div>
+        </div>
+        <div id="assignments-list" style="display:flex;flex-direction:column;gap:12px"></div>
+      </div>
+    </div>
+
+    <!-- ==================== PORTFOLIO ==================== -->
+    <div class="page" id="page-portfolio">
+      <div class="page-content">
+        <div class="section-header">
+          <div>
+            <div class="section-title">🗂️ แฟ้มสะสมผลงาน</div>
+            <div class="section-subtitle">รวบรวมผลงาน โครงงาน และทักษะทั้งหมด</div>
+          </div>
+          <button class="btn btn-primary" onclick="showXP(10)">+ เพิ่มผลงาน</button>
+        </div>
+        <div class="portfolio-grid" id="portfolio-grid"></div>
+      </div>
+    </div>
+
+    <!-- ==================== PROGRESS ==================== -->
+    <div class="page" id="page-progress">
+      <div class="page-content">
+        <div class="section-title" style="margin-bottom:20px">📊 ติดตามความก้าวหน้า</div>
+        <div class="grid-2" style="gap:16px;margin-bottom:20px">
+          <div class="card">
+            <div class="card-title" style="margin-bottom:14px">คะแนนรายสัปดาห์</div>
+            <div class="analytics-chart" id="week-chart"></div>
+          </div>
+          <div class="card">
+            <div class="card-title" style="margin-bottom:14px">สมรรถนะที่ได้รับการพัฒนา</div>
+            <div class="comp-matrix" id="comp-matrix"></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title" style="margin-bottom:14px">ความก้าวหน้าแต่ละหน่วย</div>
+          <div style="display:flex;flex-direction:column;gap:10px" id="unit-progress-list"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== SAFETY ==================== -->
+    <div class="page" id="page-safety">
+      <div class="page-content">
+        <div class="section-title" style="margin-bottom:20px">⚠️ ความปลอดภัยทางไฟฟ้าและช่างแอร์</div>
+        <div style="display:flex;flex-direction:column;gap:14px" id="safety-list"></div>
+      </div>
+    </div>
+
+    <!-- ==================== REFLECTION ==================== -->
+    <div class="page" id="page-reflection">
+      <div class="page-content">
+        <div class="section-title" style="margin-bottom:20px">💭 บันทึกสะท้อนคิด</div>
+        <div class="card" style="margin-bottom:16px">
+          <div class="card-title" style="margin-bottom:16px">บันทึกประจำวัน — 14 พ.ค. 2568</div>
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <div class="reflection-card">
+              <div class="reflection-q">🌟 วันนี้คุณเรียนรู้อะไรที่ดีที่สุด?</div>
+              <textarea class="reflection-textarea" placeholder="เขียนสิ่งที่คุณได้เรียนรู้วันนี้..."></textarea>
+            </div>
+            <div class="reflection-card">
+              <div class="reflection-q">🔧 ทักษะใดที่คุณพัฒนาขึ้น?</div>
+              <textarea class="reflection-textarea" placeholder="ทักษะที่ฝึกได้และพัฒนาขึ้น..."></textarea>
+            </div>
+            <div class="reflection-card">
+              <div class="reflection-q">❓ ยังมีอะไรที่ไม่เข้าใจ?</div>
+              <textarea class="reflection-textarea" placeholder="สิ่งที่ต้องการความช่วยเหลือ..."></textarea>
+            </div>
+            <div class="reflection-card">
+              <div class="reflection-q">🎯 แผนการเรียนรู้ในครั้งต่อไป?</div>
+              <textarea class="reflection-textarea" placeholder="สิ่งที่จะทำในครั้งหน้า..."></textarea>
+            </div>
+            <button class="btn btn-primary" onclick="showXP(20)">💾 บันทึก</button>
+          </div>
+        </div>
+        <!-- Past reflections -->
+        <div class="card">
+          <div class="card-title" style="margin-bottom:14px">บันทึกย้อนหลัง</div>
+          <div style="display:flex;flex-direction:column;gap:10px" id="past-reflections"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== CERTIFICATES ==================== -->
+    <div class="page" id="page-certificates">
+      <div class="page-content">
+        <div class="section-title" style="margin-bottom:20px">🏆 ประกาศนียบัตรและรางวัล</div>
+        <div class="certificate-card">
+          <div class="cert-corner tl"></div>
+          <div class="cert-corner tr"></div>
+          <div class="cert-corner bl"></div>
+          <div class="cert-corner br"></div>
+          <div class="cert-badge-icon">🏆</div>
+          <div class="cert-title">CERTIFICATE OF COMPLETION</div>
+          <div class="cert-name">นายสมชาย ใจดี</div>
+          <div class="cert-course">สำเร็จหลักสูตร: ช่างแอร์และเครื่องทำความเย็น<br>ระดับ ปวช. 1 แผนกไฟฟ้ากำลัง</div>
+          <div class="cert-line"></div>
+          <div style="font-size:13px;color:var(--text-muted);margin-bottom:16px">ออกให้ ณ วันที่ 14 พฤษภาคม 2568</div>
+          <div class="cert-footer">
+            <div class="cert-sig">
+              <div class="cert-sig-line"></div>
+              <div class="cert-sig-name">อาจารย์ประยูร มีชัย<br>ครูผู้สอน</div>
+            </div>
+            <div class="cert-sig">
+              <div style="font-size:32px;margin-bottom:6px">🎓</div>
+              <div class="cert-sig-name">ประกาศนียบัตร<br>หน่วยที่ 1-5</div>
+            </div>
+            <div class="cert-sig">
+              <div class="cert-sig-line"></div>
+              <div class="cert-sig-name">ผอ. สมศักดิ์ ดีงาม<br>ผู้อำนวยการ</div>
+            </div>
+          </div>
+        </div>
+        <div style="text-align:center;margin-top:16px;display:flex;gap:10px;justify-content:center">
+          <button class="btn btn-primary" onclick="showXP(5)">⬇ ดาวน์โหลด PDF</button>
+          <button class="btn btn-outline">📤 แชร์</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== LEADERBOARD ==================== -->
+    <div class="page" id="page-leaderboard">
+      <div class="page-content">
+        <div class="section-title" style="margin-bottom:20px">🥇 การจัดอันดับนักเรียน</div>
+        <div class="card">
+          <div id="full-leaderboard"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== ANALYTICS ==================== -->
+    <div class="page" id="page-analytics">
+      <div class="page-content">
+        <div class="section-title" style="margin-bottom:20px">📈 วิเคราะห์การเรียนรู้</div>
+        <div class="grid-4" style="margin-bottom:20px">
+          <div class="stat-card">
+            <div class="stat-icon" style="background:rgba(33,150,243,0.12)">👥</div>
+            <div class="stat-info">
+              <div class="stat-label">นักเรียนทั้งหมด</div>
+              <div class="stat-value">32</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="background:rgba(76,175,80,0.12)">✅</div>
+            <div class="stat-info">
+              <div class="stat-label">ส่งงานครบ</div>
+              <div class="stat-value">78%</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="background:rgba(255,152,0,0.12)">⚠️</div>
+            <div class="stat-info">
+              <div class="stat-label">เสี่ยงตกหล่น</div>
+              <div class="stat-value">4</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="background:rgba(156,39,176,0.12)">⭐</div>
+            <div class="stat-info">
+              <div class="stat-label">คะแนนเฉลี่ยชั้น</div>
+              <div class="stat-value">74%</div>
+            </div>
+          </div>
+        </div>
+        <div class="card" style="margin-bottom:16px">
+          <div class="card-title" style="margin-bottom:14px">ข้อมูลนักเรียน</div>
+          <div class="admin-toolbar">
+            <input class="search-input" type="text" placeholder="ค้นหานักเรียน...">
+            <button class="btn btn-outline" style="font-size:12px">📥 Export</button>
+          </div>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>ชื่อ-สกุล</th>
+                <th>ความก้าวหน้า</th>
+                <th>คะแนน</th>
+                <th>ใบงาน</th>
+                <th>XP</th>
+                <th>สถานะ</th>
+              </tr>
+            </thead>
+            <tbody id="student-table-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== ADMIN ==================== -->
+    <div class="page" id="page-admin">
+      <div class="page-content">
+        <div class="section-title" style="margin-bottom:20px">⚙️ แผงผู้สอน</div>
+        <div class="grid-3" style="margin-bottom:20px;gap:14px">
+          <div class="card" style="cursor:pointer;text-align:center;padding:24px" onclick="showXP(5)">
+            <div style="font-size:32px;margin-bottom:8px">📚</div>
+            <div style="font-weight:600;margin-bottom:4px">จัดการบทเรียน</div>
+            <div style="font-size:12px;color:var(--text-muted)">เพิ่ม/แก้ไขหน่วยการเรียน</div>
+          </div>
+          <div class="card" style="cursor:pointer;text-align:center;padding:24px" onclick="showXP(5)">
+            <div style="font-size:32px;margin-bottom:8px">📝</div>
+            <div style="font-weight:600;margin-bottom:4px">ตรวจใบงาน</div>
+            <div style="font-size:12px;color:var(--text-muted)">ให้คะแนนและ feedback</div>
+          </div>
+          <div class="card" style="cursor:pointer;text-align:center;padding:24px" onclick="showXP(5)">
+            <div style="font-size:32px;margin-bottom:8px">📊</div>
+            <div style="font-weight:600;margin-bottom:4px">รายงานผล</div>
+            <div style="font-size:12px;color:var(--text-muted)">ดูและ export ผลการเรียน</div>
+          </div>
+          <div class="card" style="cursor:pointer;text-align:center;padding:24px" onclick="showXP(5)">
+            <div style="font-size:32px;margin-bottom:8px">❓</div>
+            <div style="font-weight:600;margin-bottom:4px">จัดการแบบทดสอบ</div>
+            <div style="font-size:12px;color:var(--text-muted)">สร้างและแก้ไขข้อสอบ</div>
+          </div>
+          <div class="card" style="cursor:pointer;text-align:center;padding:24px" onclick="showXP(5)">
+            <div style="font-size:32px;margin-bottom:8px">👥</div>
+            <div style="font-weight:600;margin-bottom:4px">จัดการนักเรียน</div>
+            <div style="font-size:12px;color:var(--text-muted)">เพิ่ม/แก้ไขข้อมูลนักเรียน</div>
+          </div>
+          <div class="card" style="cursor:pointer;text-align:center;padding:24px" onclick="showXP(5)">
+            <div style="font-size:32px;margin-bottom:8px">📅</div>
+            <div style="font-weight:600;margin-bottom:4px">จัดการตาราง</div>
+            <div style="font-size:12px;color:var(--text-muted)">กำหนดการและวันส่งงาน</div>
+          </div>
+        </div>
+        <!-- Grade submission form -->
+        <div class="card">
+          <div class="card-title" style="margin-bottom:14px">✏️ ตรวจใบงานล่าสุด</div>
+          <table class="data-table">
+            <thead><tr><th>นักเรียน</th><th>ใบงาน</th><th>วันส่ง</th><th>ไฟล์</th><th>ดำเนินการ</th></tr></thead>
+            <tbody>
+              <tr><td>นายสมชาย ใจดี</td><td>ใบงานที่ 9</td><td>14 พ.ค. 68</td><td><span class="badge badge-blue">2 ไฟล์</span></td><td><button class="btn btn-primary" style="font-size:11px;padding:5px 10px">ตรวจ</button></td></tr>
+              <tr><td>นางสาวพิมพ์ใจ รัก</td><td>ใบงานที่ 8</td><td>13 พ.ค. 68</td><td><span class="badge badge-blue">3 ไฟล์</span></td><td><button class="btn btn-primary" style="font-size:11px;padding:5px 10px">ตรวจ</button></td></tr>
+              <tr><td>นายประเสริฐ ดี</td><td>ใบงานที่ 9</td><td>14 พ.ค. 68</td><td><span class="badge badge-blue">1 ไฟล์</span></td><td><button class="btn btn-primary" style="font-size:11px;padding:5px 10px">ตรวจ</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </main><!-- end #main -->
+</div><!-- end #app-shell -->
+
+<!-- ======= MODALS ======= -->
+<div class="overlay" id="unit-modal" onclick="closeModal()">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <div class="modal-title" id="modal-unit-title">หน่วยที่ 1</div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div id="modal-unit-content"></div>
+  </div>
+</div>
+
+<!-- Quiz Result Modal -->
+<div class="overlay" id="quiz-result-modal" onclick="closeQuizModal()">
+  <div class="modal" style="text-align:center" onclick="event.stopPropagation()">
+    <div id="quiz-result-content"></div>
+    <button class="btn btn-primary" style="margin-top:20px" onclick="closeQuizModal()">ปิด</button>
+  </div>
+</div>
+
+<script>
+// =====================================================
+// DATA
+// =====================================================
+const UNITS = [
+  { id:1, title:'หลักการทำความเย็นเบื้องต้น', desc:'ทฤษฎีการถ่ายเทความร้อน วัฏจักรทำความเย็น สารทำความเย็น', progress:100, status:'done', worksheets:2, videos:4, topics:['หลักการถ่ายเทความร้อน','วัฏจักรการทำความเย็น','สารทำความเย็น R134a','การทดสอบก่อนเรียน'] },
+  { id:2, title:'ส่วนประกอบระบบทำความเย็น', desc:'คอมเพรสเซอร์ คอนเดนเซอร์ อีวาโปเรเตอร์ วาล์วขยาย', progress:100, status:'done', worksheets:2, videos:5, topics:['คอมเพรสเซอร์','คอนเดนเซอร์','อีวาโปเรเตอร์','วาล์วขยายและอุปกรณ์อื่น'] },
+  { id:3, title:'สารทำความเย็น', desc:'ประเภทสารทำความเย็น การจัดการ ความปลอดภัย', progress:100, status:'done', worksheets:2, videos:3, topics:['ประเภทสารทำความเย็น','คุณสมบัติสาร','การเติมและปล่อยสาร','ความปลอดภัย'] },
+  { id:4, title:'เครื่องมือวัดและทดสอบ', desc:'มัลติมิเตอร์ เกจวัดแรงดัน เทอร์โมมิเตอร์', progress:100, status:'done', worksheets:2, videos:4, topics:['มัลติมิเตอร์','เกจวัดความดัน','เทอร์โมมิเตอร์','Clamp meter'] },
+  { id:5, title:'ระบบไฟฟ้าเครื่องทำความเย็น', desc:'วงจรไฟฟ้า คอมเพรสเซอร์ รีเลย์ คาปาซิเตอร์', progress:60, status:'active', worksheets:2, videos:5, topics:['วงจรไฟฟ้าพื้นฐาน','คอมเพรสเซอร์และมอเตอร์','รีเลย์และสตาร์ทเตอร์','คาปาซิเตอร์','เทอร์โมสตัท'] },
+  { id:6, title:'การซ่อมบำรุงระบบ', desc:'การตรวจสอบ ล้างระบบ เติมสาร ทดสอบรั่ว', progress:0, status:'locked', worksheets:2, videos:4, topics:['การตรวจสอบเบื้องต้น','การล้างระบบ','การเติมสารทำความเย็น','การทดสอบรั่ว'] },
+  { id:7, title:'การวิเคราะห์และแก้ไขปัญหา', desc:'ขั้นตอนการแก้ปัญหา การวินิจฉัยความผิดปกติ', progress:0, status:'locked', worksheets:2, videos:6, topics:['หลักการวินิจฉัยปัญหา','อาการผิดปกติและสาเหตุ','ขั้นตอนแก้ไข','กรณีศึกษา'] },
+  { id:8, title:'โปรเจกต์สิ้นปี', desc:'ออกแบบและบำรุงรักษาระบบทำความเย็นจริง', progress:0, status:'locked', worksheets:2, videos:3, topics:['วางแผนโปรเจกต์','การออกแบบระบบ','การติดตั้งและทดสอบ','นำเสนอผลงาน'] },
+];
+
+const ASSIGNMENTS = [
+  { id:1, unit:1, title:'ใบงานที่ 1 — วาดวัฏจักรการทำความเย็น', due:'1 ม.ค. 68', status:'graded', score:92, icon:'📐' },
+  { id:2, unit:1, title:'ใบงานที่ 2 — คำนวณค่าสัมประสิทธิ์ COP', due:'8 ม.ค. 68', status:'graded', score:85, icon:'🧮' },
+  { id:3, unit:2, title:'ใบงานที่ 3 — ระบุส่วนประกอบระบบ', due:'15 ม.ค. 68', status:'graded', score:90, icon:'🔧' },
+  { id:4, unit:2, title:'ใบงานที่ 4 — บำรุงรักษาคอมเพรสเซอร์', due:'22 ม.ค. 68', status:'graded', score:88, icon:'⚙️' },
+  { id:5, unit:3, title:'ใบงานที่ 5 — จำแนกสารทำความเย็น', due:'1 ก.พ. 68', status:'graded', score:95, icon:'🧪' },
+  { id:6, unit:3, title:'ใบงานที่ 6 — การเติมสารและทดสอบ', due:'8 ก.พ. 68', status:'graded', score:78, icon:'🔩' },
+  { id:7, unit:4, title:'ใบงานที่ 7 — การใช้มัลติมิเตอร์', due:'15 ก.พ. 68', status:'graded', score:82, icon:'⚡' },
+  { id:8, unit:4, title:'ใบงานที่ 8 — การวัดแรงดันระบบ', due:'22 ก.พ. 68', status:'submitted', icon:'📊' },
+  { id:9, unit:5, title:'ใบงานที่ 9 — การวิเคราะห์วงจรไฟฟ้า', due:'14 พ.ค. 68', status:'pending', icon:'🔌' },
+  { id:10, unit:5, title:'ใบงานที่ 10 — ทดสอบรีเลย์คอมเพรสเซอร์', due:'21 พ.ค. 68', status:'pending', icon:'🔘' },
+  { id:11, unit:6, title:'ใบงานที่ 11 — แผนการบำรุงรักษา', due:'ยังไม่เปิด', status:'locked', icon:'📋' },
+  { id:12, unit:6, title:'ใบงานที่ 12 — รายงานการล้างระบบ', due:'ยังไม่เปิด', status:'locked', icon:'📄' },
+  { id:13, unit:7, title:'ใบงานที่ 13 — วิเคราะห์กรณีศึกษา', due:'ยังไม่เปิด', status:'locked', icon:'🔍' },
+  { id:14, unit:7, title:'ใบงานที่ 14 — แผนผังการแก้ปัญหา', due:'ยังไม่เปิด', status:'locked', icon:'📌' },
+  { id:15, unit:8, title:'ใบงานที่ 15 — รายงานโปรเจกต์', due:'ยังไม่เปิด', status:'locked', icon:'📁' },
+  { id:16, unit:8, title:'ใบงานที่ 16 — นำเสนอผลงานสุดท้าย', due:'ยังไม่เปิด', status:'locked', icon:'🎤' },
+];
+
+const STUDENTS = [
+  {name:'นายสมชาย ใจดี', progress:68, score:78, assignments:11, xp:2450, status:'good'},
+  {name:'นางสาวพิมพ์ใจ รัก', progress:75, score:82, assignments:12, xp:2780, status:'good'},
+  {name:'นายประเสริฐ ดีมาก', progress:90, score:91, assignments:15, xp:3420, status:'excellent'},
+  {name:'นางสาวสุดใจ มี', progress:45, score:62, assignments:8, xp:1640, status:'risk'},
+  {name:'นายวิชัย ชาญ', progress:83, score:88, assignments:14, xp:3100, status:'good'},
+  {name:'นางสาวอรุณี สว่าง', progress:30, score:55, assignments:6, xp:1200, status:'risk'},
+];
+
+const LEADERBOARD = [
+  {name:'นายประเสริฐ ดีมาก', xp:3420, level:5, avatar:'ปด', color:'#1565c0'},
+  {name:'นายวิชัย ชาญ', xp:3100, level:5, avatar:'วช', color:'#4a148c'},
+  {name:'นายสมชาย ใจดี', xp:2450, level:4, avatar:'สช', color:'#1b5e20'},
+  {name:'นางสาวพิมพ์ใจ รัก', xp:2780, level:4, avatar:'พร', color:'#880e4f'},
+  {name:'นายสิทธิชัย กล้า', xp:2200, level:3, avatar:'สก', color:'#e65100'},
+  {name:'นางสาวรุ่งทิพย์ งาม', xp:1950, level:3, avatar:'รง', color:'#006064'},
+  {name:'นายอนุชา ดี', xp:1800, level:3, avatar:'อด', color:'#37474f'},
+  {name:'นางสาวสุดใจ มี', xp:1640, level:2, avatar:'สม', color:'#4e342e'},
+];
+
+const PORTFOLIO_ITEMS = [
+  {title:'รายงานวัฏจักรทำความเย็น',icon:'📄',type:'PDF',date:'10 ม.ค. 68'},
+  {title:'วิดีโอการวัดค่าไฟฟ้า',icon:'🎥',type:'VDO',date:'18 ก.พ. 68'},
+  {title:'แผนผังวงจรไฟฟ้าตู้เย็น',icon:'📐',type:'IMG',date:'5 มี.ค. 68'},
+  {title:'โปรเจกต์ตรวจสอบระบบ',icon:'🔧',type:'PDF',date:'20 มี.ค. 68'},
+  {title:'สมุดบันทึกการปฏิบัติ',icon:'📓',type:'PDF',date:'1 เม.ย. 68'},
+  {title:'ภาพถ่ายการบำรุงรักษา',icon:'📷',type:'IMG',date:'15 เม.ย. 68'},
+];
+
+const SAFETY_ITEMS = [
+  {
+    title:'ความปลอดภัยทางไฟฟ้า',
+    icon:'⚡',
+    checks:[
+      'ตัดไฟฟ้าก่อนเริ่มทำงานทุกครั้ง',
+      'สวมถุงมือยางกันไฟฟ้าเมื่อทำงานกับระบบไฟฟ้า',
+      'ตรวจสอบสายดินให้ครบถ้วน',
+      'ห้ามทำงานคนเดียวกับระบบไฟแรงสูง',
+      'ติดป้ายเตือน "อย่าเปิดสวิตช์" ระหว่างซ่อม',
+    ]
+  },
+  {
+    title:'ความปลอดภัยกับสารทำความเย็น',
+    icon:'❄️',
+    checks:[
+      'สวมแว่นนิรภัยและถุงมือเมื่อจัดการสารทำความเย็น',
+      'ทำงานในพื้นที่อากาศถ่ายเทได้สะดวก',
+      'เก็บสารทำความเย็นให้ห่างจากแหล่งความร้อน',
+      'รู้วิธีปฐมพยาบาลเมื่อสัมผัสสาร',
+      'ไม่สูดดมสารทำความเย็นโดยตรง',
+    ]
+  },
+  {
+    title:'อุปกรณ์ป้องกันส่วนบุคคล (PPE)',
+    icon:'🦺',
+    checks:[
+      'สวมชุด PPE ครบก่อนเริ่มปฏิบัติงาน',
+      'ใส่รองเท้านิรภัยตลอดเวลา',
+      'สวมหมวกแข็งในพื้นที่ก่อสร้าง',
+      'ใช้แว่นตานิรภัยเมื่อตัดหรือเจาะ',
+      'ตรวจสอบสภาพ PPE ก่อนใช้งาน',
+    ]
+  },
+];
+
+const QUIZ_QUESTIONS = [
+  {
+    q: 'ส่วนประกอบใดของระบบทำความเย็นที่ทำหน้าที่อัดสารทำความเย็น?',
+    options: ['คอนเดนเซอร์ (Condenser)', 'คอมเพรสเซอร์ (Compressor)', 'อีวาโปเรเตอร์ (Evaporator)', 'วาล์วขยาย (Expansion Valve)'],
+    answer: 1
+  },
+  {
+    q: 'หากวัดค่าความต้านทานของขดลวดคอมเพรสเซอร์ได้ "∞" (OL) แสดงว่าอะไร?',
+    options: ['คอมเพรสเซอร์ทำงานปกติ', 'ขดลวดลัดวงจร (Short Circuit)', 'ขดลวดขาด (Open Circuit)', 'แรงดันไฟฟ้าต่ำ'],
+    answer: 2
+  },
+  {
+    q: 'ค่าความจุของคาปาซิเตอร์มีหน่วยเป็นอะไร?',
+    options: ['โอห์ม (Ω)', 'วัตต์ (W)', 'ไมโครฟารัด (μF)', 'แอมแปร์ (A)'],
+    answer: 2
+  },
+  {
+    q: 'ขั้นตอนแรกก่อนซ่อมระบบไฟฟ้าตู้เย็นคืออะไร?',
+    options: ['วัดค่าคาปาซิเตอร์', 'ตัดไฟและล็อกสวิตช์', 'เติมสารทำความเย็น', 'ตรวจสอบอุณหภูมิ'],
+    answer: 1
+  },
+  {
+    q: 'รีเลย์คอมเพรสเซอร์ (Compressor Relay) ทำหน้าที่อะไร?',
+    options: ['ควบคุมอุณหภูมิ', 'ช่วยสตาร์ทคอมเพรสเซอร์', 'กรองสารทำความเย็น', 'วัดแรงดันไฟฟ้า'],
+    answer: 1
+  },
+];
+
+const COMPETENCIES = [
+  {name:'หลักการทำความเย็น', pct:95, color:'#4caf50'},
+  {name:'ส่วนประกอบระบบ', pct:90, color:'#2196f3'},
+  {name:'การใช้เครื่องมือวัด', pct:82, color:'#ff9800'},
+  {name:'วงจรไฟฟ้า', pct:65, color:'#9c27b0'},
+  {name:'การซ่อมบำรุง', pct:40, color:'#f44336'},
+  {name:'การแก้ไขปัญหา', pct:30, color:'#795548'},
+];
+
+const WEEK_SCORES = [45, 62, 58, 75, 80, 72, 85];
+const WEEK_LABELS = ['จ','อ','พ','พฤ','ศ','ส','อา'];
+
+// =====================================================
+// STATE
+// =====================================================
+let currentPage = 'dashboard';
+let xp = 2450;
+let labRunning = false;
+let labInterval = null;
+let selectedAnswers = {};
+let safetyChecked = {};
+
+// =====================================================
+// NAVIGATION
+// =====================================================
+function showPage(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const el = document.getElementById('page-' + page);
+  if (el) el.classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => {
+    if (n.getAttribute('onclick')?.includes(`'${page}'`)) n.classList.add('active');
+  });
+  const titles = {
+    dashboard:'แดชบอร์ด', lesson:'บทเรียน', units:'หน่วยการเรียน',
+    assignments:'ใบงาน', portfolio:'แฟ้มสะสมผลงาน', progress:'ความก้าวหน้า',
+    safety:'ความปลอดภัย', reflection:'สะท้อนคิด', certificates:'ประกาศนียบัตร',
+    leaderboard:'การจัดอันดับ', admin:'แผงผู้สอน', analytics:'วิเคราะห์',
+    virtuallab:'ห้องปฏิบัติการเสมือน'
+  };
+  document.getElementById('page-title').textContent = titles[page] || page;
+  currentPage = page;
+  renderPage(page);
+  // Close mobile sidebar
+  document.getElementById('sidebar').classList.remove('open');
+}
+
+function renderPage(page) {
+  if (page === 'units') renderUnits();
+  if (page === 'assignments') renderAssignments();
+  if (page === 'portfolio') renderPortfolio();
+  if (page === 'progress') renderProgress();
+  if (page === 'safety') renderSafety();
+  if (page === 'analytics') renderAnalytics();
+  if (page === 'leaderboard') renderLeaderboardFull();
+  if (page === 'reflection') renderReflection();
+}
+
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+}
+
+// =====================================================
+// RENDER FUNCTIONS
+// =====================================================
+function renderUnits() {
+  const container = document.getElementById('units-full-list');
+  container.innerHTML = UNITS.map(u => `
+    <div class="assignment-card unit-card u${u.id}" style="display:flex;gap:16px;cursor:pointer;border-left:4px solid ${u.status==='done'?'var(--green-400)':u.status==='active'?'var(--blue-400)':'var(--gray-600)'}" onclick="openUnitModal(${u.id})">
+      <div class="assignment-icon" style="background:rgba(33,150,243,0.12);font-size:24px">${u.id <= 4 ? '✅' : u.id === 5 ? '⚡' : '🔒'}</div>
+      <div style="flex:1">
+        <div style="font-size:12px;color:var(--text-muted);margin-bottom:2px">หน่วยที่ ${u.id}</div>
+        <div class="assignment-title">${u.title}</div>
+        <div class="assignment-meta">${u.desc}</div>
+        <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap">
+          <span class="tag">📝 ${u.worksheets} ใบงาน</span>
+          <span class="tag">🎬 ${u.videos} วิดีโอ</span>
+          <span class="tag">📖 ${u.topics.length} หัวข้อ</span>
+        </div>
+      </div>
+      <div style="min-width:140px">
+        <div class="progress-wrap">
+          <div class="progress-label">
+            <span>${u.status==='done'?'เสร็จแล้ว':u.status==='active'?'กำลังเรียน':'ล็อค'}</span>
+            <span>${u.progress}%</span>
+          </div>
+          <div class="progress-bar"><div class="progress-fill ${u.status==='done'?'prog-green':'prog-blue'}" style="width:${u.progress}%"></div></div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderAssignments() {
+  const container = document.getElementById('assignments-list');
+  container.innerHTML = ASSIGNMENTS.map(a => {
+    const statusMap = {
+      graded: { label:`✓ ตรวจแล้ว ${a.score}%`, badge:'badge-green' },
+      submitted: { label:'📤 ส่งแล้ว รอตรวจ', badge:'badge-blue' },
+      pending: { label:'⏰ รอส่ง', badge:'badge-orange' },
+      locked: { label:'🔒 ยังไม่เปิด', badge:'' },
+    };
+    const s = statusMap[a.status];
+    return `
+    <div class="assignment-card" style="${a.status==='locked'?'opacity:0.5;cursor:not-allowed':''}">
+      <div class="assignment-icon" style="background:rgba(33,150,243,0.1)">${a.icon}</div>
+      <div style="flex:1">
+        <div class="assignment-title">${a.title}</div>
+        <div class="assignment-meta">หน่วยที่ ${a.unit} • ครบกำหนด: ${a.due}</div>
+        <div class="assignment-status">
+          <span class="badge ${s.badge}">${s.label}</span>
+        </div>
+      </div>
+      ${a.status==='pending'?`<button class="btn btn-primary" style="align-self:center" onclick="showXP(100)">ส่งงาน</button>`:''}
+    </div>`;
+  }).join('');
+}
+
+function renderPortfolio() {
+  const grid = document.getElementById('portfolio-grid');
+  const typeBg = {PDF:'rgba(244,67,54,0.1)',VDO:'rgba(33,150,243,0.1)',IMG:'rgba(76,175,80,0.1)'};
+  grid.innerHTML = PORTFOLIO_ITEMS.map(p => `
+    <div class="portfolio-card" onclick="showXP(5)">
+      <div class="portfolio-thumb" style="background:${typeBg[p.type]||'var(--bg-card2)'}">
+        <span style="font-size:40px">${p.icon}</span>
+        <span class="portfolio-thumb-label"><span class="badge badge-blue">${p.type}</span></span>
+      </div>
+      <div class="portfolio-body">
+        <div class="portfolio-title">${p.title}</div>
+        <div class="portfolio-meta">📅 ${p.date}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderProgress() {
+  // Chart
+  const chart = document.getElementById('week-chart');
+  if (!chart.children.length) {
+    chart.innerHTML = WEEK_SCORES.map((s,i) => `
+      <div class="chart-bar-wrap">
+        <div class="chart-bar" style="height:${(s/100)*160}px" title="${s}%"></div>
+        <div class="chart-bar-label">${WEEK_LABELS[i]}</div>
+      </div>
+    `).join('');
+  }
+  // Competency
+  const cm = document.getElementById('comp-matrix');
+  if (!cm.children.length) {
+    cm.innerHTML = COMPETENCIES.map(c => `
+      <div class="comp-row">
+        <div class="comp-name">${c.name}</div>
+        <div class="comp-bar-wrap">
+          <div class="comp-fill" style="width:${c.pct}%;background:${c.color}"></div>
+        </div>
+        <div class="comp-pct" style="color:${c.color}">${c.pct}%</div>
+      </div>
+    `).join('');
+  }
+  // Unit progress list
+  const upl = document.getElementById('unit-progress-list');
+  if (!upl.children.length) {
+    upl.innerHTML = UNITS.map(u => `
+      <div class="progress-wrap">
+        <div class="progress-label">
+          <span>หน่วย ${u.id}: ${u.title}</span>
+          <span style="color:${u.progress===100?'var(--green-400)':u.progress>0?'var(--blue-400)':'var(--text-muted)'}">${u.progress}%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill ${u.progress===100?'prog-green':'prog-blue'}" style="width:${u.progress}%"></div>
+        </div>
+      </div>
+    `).join('');
+  }
+}
+
+function renderSafety() {
+  const list = document.getElementById('safety-list');
+  list.innerHTML = SAFETY_ITEMS.map((s,si) => `
+    <div class="safety-card">
+      <div class="safety-header">
+        <div class="safety-icon">${s.icon}</div>
+        <div class="safety-title">${s.title}</div>
+      </div>
+      <div class="safety-checklist">
+        ${s.checks.map((c,ci) => {
+          const key = `${si}-${ci}`;
+          const checked = safetyChecked[key];
+          return `
+          <div class="safety-check-item ${checked?'checked':''}" onclick="toggleSafety('${key}',this)">
+            <div class="safety-checkbox ${checked?'checked':''}" id="sc-${key}">${checked?'✓':''}</div>
+            <span>${c}</span>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+
+function toggleSafety(key, row) {
+  safetyChecked[key] = !safetyChecked[key];
+  const cb = document.getElementById('sc-' + key);
+  if (safetyChecked[key]) {
+    cb.classList.add('checked'); cb.textContent = '✓';
+    row.classList.add('checked');
+    showXP(5);
+  } else {
+    cb.classList.remove('checked'); cb.textContent = '';
+    row.classList.remove('checked');
+  }
+}
+
+function renderAnalytics() {
+  const tbody = document.getElementById('student-table-body');
+  if (!tbody) return;
+  const statusLabel = {excellent:'⭐ เยี่ยม', good:'✅ ดี', risk:'⚠️ เสี่ยง'};
+  const statusBadge = {excellent:'badge-green', good:'badge-blue', risk:'badge-orange'};
+  tbody.innerHTML = STUDENTS.map((s,i) => `
+    <tr>
+      <td>${i+1}</td>
+      <td><strong>${s.name}</strong></td>
+      <td>
+        <div class="progress-bar" style="width:100px;display:inline-block">
+          <div class="progress-fill prog-blue" style="width:${s.progress}%"></div>
+        </div>
+        <span style="font-size:11px;margin-left:6px;color:var(--text-muted)">${s.progress}%</span>
+      </td>
+      <td>${s.score}%</td>
+      <td>${s.assignments}/16</td>
+      <td style="color:var(--orange-400);font-weight:700">${s.xp.toLocaleString()}</td>
+      <td><span class="badge ${statusBadge[s.status]}">${statusLabel[s.status]}</span></td>
+    </tr>
+  `).join('');
+}
+
+function renderLeaderboardFull() {
+  const container = document.getElementById('full-leaderboard');
+  const sorted = [...LEADERBOARD].sort((a,b) => b.xp - a.xp);
+  container.innerHTML = sorted.map((s,i) => {
+    const rankClass = i===0?'top1':i===1?'top2':i===2?'top3':'';
+    const medal = i===0?'🥇':i===1?'🥈':i===2?'🥉':null;
+    return `
+    <div class="leaderboard-item">
+      <div class="lb-rank ${rankClass}">${medal||`#${i+1}`}</div>
+      <div class="lb-avatar" style="background:${s.color}">${s.avatar}</div>
+      <div class="lb-name">${s.name}</div>
+      <div style="font-size:11px;color:var(--text-muted);margin-right:8px">ระดับ ${s.level}</div>
+      <div class="lb-xp">${s.xp.toLocaleString()} XP</div>
+    </div>`;
+  }).join('');
+}
+
+function renderLeaderboardMini() {
+  const container = document.getElementById('leaderboard-mini');
+  if (!container) return;
+  const sorted = [...LEADERBOARD].sort((a,b) => b.xp - a.xp).slice(0,5);
+  container.innerHTML = sorted.map((s,i) => {
+    const rankClass = i===0?'top1':i===1?'top2':i===2?'top3':'';
+    const medal = i===0?'🥇':i===1?'🥈':i===2?'🥉':null;
+    return `
+    <div class="leaderboard-item">
+      <div class="lb-rank ${rankClass}">${medal||`#${i+1}`}</div>
+      <div class="lb-avatar" style="background:${s.color};width:28px;height:28px;font-size:11px">${s.avatar}</div>
+      <div class="lb-name" style="font-size:12px">${s.name}</div>
+      <div class="lb-xp" style="font-size:12px">${s.xp.toLocaleString()}</div>
+    </div>`;
+  }).join('');
+}
+
+function renderReflection() {
+  const container = document.getElementById('past-reflections');
+  if (!container) return;
+  const past = [
+    {date:'13 พ.ค. 68', topic:'หน่วย 5 — วงจรไฟฟ้า', learned:'เรียนรู้การวัดค่าด้วยมัลติมิเตอร์'},
+    {date:'12 พ.ค. 68', topic:'หน่วย 4 — เครื่องมือวัด', learned:'เข้าใจวิธีการใช้เกจวัดแรงดัน'},
+    {date:'10 พ.ค. 68', topic:'หน่วย 4 — การทดสอบ', learned:'ทดสอบคาปาซิเตอร์ด้วยมัลติมิเตอร์ได้'},
+  ];
+  container.innerHTML = past.map(p => `
+    <div style="padding:12px;border:1px solid var(--border);border-radius:8px">
+      <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+        <div style="font-size:12px;font-weight:600">${p.topic}</div>
+        <div style="font-size:11px;color:var(--text-muted)">${p.date}</div>
+      </div>
+      <div style="font-size:12px;color:var(--text-secondary)">${p.learned}</div>
+    </div>
+  `).join('');
+}
+
+function renderTopics() {
+  const el = document.getElementById('topics-list');
+  if (!el) return;
+  const topics = ['วงจรไฟฟ้าพื้นฐาน','คอมเพรสเซอร์และมอเตอร์','รีเลย์และสตาร์ทเตอร์','คาปาซิเตอร์','เทอร์โมสตัท'];
+  el.innerHTML = topics.map((t,i) => `
+    <div class="topic-item ${i<2?'done':i===2?'active':''}" onclick="showXP(10)">
+      <div class="topic-num" style="${i<2?'background:var(--green-600);color:#fff;border-color:var(--green-600)':''}">
+        ${i<2?'✓':(i+1)}
+      </div>
+      <div class="topic-info">
+        <div class="topic-name">${t}</div>
+        <div class="topic-dur">${[12,15,18,10,8][i]} นาที</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderQuiz() {
+  const container = document.getElementById('quiz-container');
+  if (!container) return;
+  container.innerHTML = QUIZ_QUESTIONS.map((q,i) => `
+    <div class="quiz-question">
+      <div class="q-num">ข้อที่ ${i+1} จาก ${QUIZ_QUESTIONS.length}</div>
+      <div class="q-text">${q.q}</div>
+      <div class="q-options">
+        ${q.options.map((o,j) => `
+          <div class="q-option" id="q${i}-opt${j}" onclick="selectAnswer(${i},${j})">
+            <div class="q-radio"></div>
+            ${o}
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+
+// =====================================================
+// QUIZ
+// =====================================================
+function selectAnswer(qIdx, optIdx) {
+  selectedAnswers[qIdx] = optIdx;
+  QUIZ_QUESTIONS[qIdx].options.forEach((_,j) => {
+    const el = document.getElementById(`q${qIdx}-opt${j}`);
+    if (el) { el.classList.remove('selected'); }
+  });
+  const sel = document.getElementById(`q${qIdx}-opt${optIdx}`);
+  if (sel) sel.classList.add('selected');
+}
+
+function submitQuiz() {
+  let correct = 0;
+  QUIZ_QUESTIONS.forEach((q,i) => {
+    if (selectedAnswers[i] === q.answer) correct++;
+    // Show correct/wrong
+    q.options.forEach((_,j) => {
+      const el = document.getElementById(`q${i}-opt${j}`);
+      if (!el) return;
+      el.classList.remove('selected');
+      if (j === q.answer) el.classList.add('correct');
+      else if (j === selectedAnswers[i] && selectedAnswers[i] !== q.answer) el.classList.add('wrong');
+    });
+  });
+  const pct = Math.round((correct/QUIZ_QUESTIONS.length)*100);
+  const earnedXp = pct >= 60 ? Math.round(pct * 2) : 50;
+  showXP(earnedXp);
+  // Show result modal
+  const modal = document.getElementById('quiz-result-modal');
+  const content = document.getElementById('quiz-result-content');
+  content.innerHTML = `
+    <div style="font-size:48px;margin-bottom:12px">${pct>=80?'🏆':pct>=60?'✅':'📚'}</div>
+    <div style="font-size:22px;font-weight:700;margin-bottom:8px">${pct >= 80 ? 'ยอดเยี่ยม!' : pct >= 60 ? 'ผ่านแล้ว!' : 'ต้องปรับปรุง'}</div>
+    <div style="font-size:36px;font-weight:700;color:var(--blue-400);margin-bottom:8px">${pct}%</div>
+    <div style="color:var(--text-secondary)">ตอบถูก ${correct} จาก ${QUIZ_QUESTIONS.length} ข้อ</div>
+    <div style="margin-top:12px"><span class="badge badge-orange">+${earnedXp} XP</span></div>
+  `;
+  modal.classList.add('open');
+}
+
+function closeQuizModal() {
+  document.getElementById('quiz-result-modal').classList.remove('open');
+}
+
+// =====================================================
+// UNIT MODAL
+// =====================================================
+function openUnitModal(id) {
+  const u = UNITS.find(x => x.id === id);
+  if (!u) return;
+  document.getElementById('modal-unit-title').textContent = `หน่วยที่ ${u.id} — ${u.title}`;
+  const content = document.getElementById('modal-unit-content');
+  const cycleSteps = ['แรงจูงใจ','ทฤษฎี','สาธิต','จำลอง','ฝึกปฏิบัติ','โปรเจกต์','สะท้อนคิด','ประเมิน','Feedback'];
+  content.innerHTML = `
+    <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;margin-bottom:14px">${u.desc}</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">
+      <span class="badge badge-blue">📝 ${u.worksheets} ใบงาน</span>
+      <span class="badge badge-orange">🎬 ${u.videos} วิดีโอ</span>
+      <span class="badge badge-purple">📖 ${u.topics.length} หัวข้อ</span>
+    </div>
+    <div style="margin-bottom:16px">
+      <div style="font-size:13px;font-weight:600;margin-bottom:8px">วงจรการเรียนรู้</div>
+      <div style="display:flex;gap:4px;flex-wrap:wrap">
+        ${cycleSteps.map(s=>`<span class="tag">${s}</span>`).join('')}
+      </div>
+    </div>
+    <div style="margin-bottom:16px">
+      <div style="font-size:13px;font-weight:600;margin-bottom:8px">หัวข้อการเรียน</div>
+      ${u.topics.map((t,i)=>`
+        <div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--border)">
+          <span style="font-size:12px;color:var(--text-muted)">${i+1}.</span>
+          <span style="font-size:13px">${t}</span>
+        </div>
+      `).join('')}
+    </div>
+    <div style="margin-bottom:16px">
+      <div class="progress-wrap">
+        <div class="progress-label"><span>ความก้าวหน้า</span><span>${u.progress}%</span></div>
+        <div class="progress-bar"><div class="progress-fill ${u.progress===100?'prog-green':'prog-blue'}" style="width:${u.progress}%"></div></div>
+      </div>
+    </div>
+    <button class="btn btn-primary" style="width:100%" onclick="closeModal();${u.status!=='locked'?`showPage('lesson')`:''}">
+      ${u.status==='done'?'ทบทวนบทเรียน':u.status==='active'?'เรียนต่อ ▶':'🔒 ล็อค — ต้องเสร็จหน่วยก่อน'}
+    </button>
+  `;
+  document.getElementById('unit-modal').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('unit-modal').classList.remove('open');
+}
+
+// =====================================================
+// VIRTUAL LAB
+// =====================================================
+function addLog(msg) {
+  const log = document.getElementById('lab-log');
+  if (!log) return;
+  log.innerHTML += `<div>$ ${msg}</div>`;
+  log.scrollTop = log.scrollHeight;
+}
+
+function toggleCompressor() {
+  labRunning = !labRunning;
+  const sw = document.getElementById('comp-switch');
+  const status = document.getElementById('power-status');
+  const indicator = document.getElementById('comp-indicator');
+  if (labRunning) {
+    status.textContent = 'ON'; status.style.color = '#4caf50';
+    indicator.style.fill = '#4caf50';
+    document.getElementById('voltage-val').textContent = '220';
+    document.getElementById('current-val').textContent = '4.8';
+    document.getElementById('real-temp').textContent = '25';
+    addLog('เริ่มระบบคอมเพรสเซอร์ — แรงดัน 220V / กระแส 4.8A');
+    animateLab();
+  } else {
+    status.textContent = 'OFF'; status.style.color = '#f44336';
+    indicator.style.fill = '#333';
+    document.getElementById('voltage-val').textContent = '--';
+    document.getElementById('current-val').textContent = '--';
+    document.getElementById('real-temp').textContent = '--';
+    addLog('หยุดระบบคอมเพรสเซอร์');
+    if (labInterval) { clearInterval(labInterval); labInterval = null; }
+  }
+}
+
+function animateLab() {
+  let t = 0;
+  const flow1 = document.getElementById('flow1');
+  const flow2 = document.getElementById('flow2');
+  const realTemp = document.getElementById('real-temp');
+  let temp = 25;
+  labInterval = setInterval(() => {
+    t += 0.05;
+    // Animate flow1 along hot pipe path (140,110 -> 270,100 -> 270,65)
+    const p1 = Math.min(t % 1.0 / 1.0, 1);
+    if (p1 < 0.5) {
+      flow1.setAttribute('cx', 140 + (270-140) * (p1/0.5));
+      flow1.setAttribute('cy', 110 + (100-110) * (p1/0.5));
+    } else {
+      flow1.setAttribute('cx', 270);
+      flow1.setAttribute('cy', 100 + (65-100) * ((p1-0.5)/0.5));
+    }
+    // Animate flow2 along cold pipe (270,205 -> 270,240 -> 90,240 -> 90,170)
+    const p2 = Math.min((t + 0.5) % 1.0 / 1.0, 1);
+    if (p2 < 0.25) { flow2.setAttribute('cx',270); flow2.setAttribute('cy',205+(240-205)*(p2/0.25)); }
+    else if (p2 < 0.5) { flow2.setAttribute('cx',270+(90-270)*((p2-0.25)/0.25)); flow2.setAttribute('cy',240); }
+    else { flow2.setAttribute('cx',90); flow2.setAttribute('cy',240+(170-240)*((p2-0.5)/0.5)); }
+    // Cooling simulation
+    if (temp > 5) { temp -= 0.05; }
+    realTemp.textContent = temp.toFixed(1);
+  }, 50);
+}
+
+function measureVoltage() {
+  if (!labRunning) { addLog('⚠️ ระบบปิดอยู่ — เปิดระบบก่อนวัด'); return; }
+  addLog('วัดแรงดัน AC ที่ขั้ว L-N: 221.5V (ปกติ)');
+  showXP(15);
+}
+function measureCurrent() {
+  if (!labRunning) { addLog('⚠️ ระบบปิดอยู่ — เปิดระบบก่อนวัด'); return; }
+  addLog('วัดกระแส AC: 4.82A (โหลดปกติ)');
+  showXP(15);
+}
+function testRelay() {
+  addLog('ทดสอบรีเลย์: ขดลวด = 10.2Ω ✓ | หน้าสัมผัส = 0.0Ω ✓ (ปกติ)');
+  showXP(20);
+}
+function testCapacitor() {
+  addLog('ทดสอบคาปาซิเตอร์: 25.3μF (พิกัด 25μF ±5%) ✓');
+  showXP(20);
+}
+function injectFault() {
+  if (!labRunning) { addLog('⚠️ กรุณาเปิดระบบก่อน'); return; }
+  addLog('⚠️ จำลองความผิดปกติ: รีเลย์ขาด — คอมเพรสเซอร์ไม่ทำงาน!');
+  document.getElementById('voltage-val').textContent = '220';
+  document.getElementById('current-val').textContent = '0.0';
+  setTimeout(()=>addLog('💡 คำแนะนำ: ตรวจสอบรีเลย์และทดแทนด้วยรีเลย์ใหม่'), 1500);
+  showXP(30);
+}
+
+// =====================================================
+// CIRCUIT DIAGRAM INTERACTIVITY
+// =====================================================
+function showPartInfo(part) {
+  const info = {
+    relay: '🟣 <strong>รีเลย์ (Relay)</strong> — ทำหน้าที่ช่วยสตาร์ทคอมเพรสเซอร์ในช่วงเริ่มต้น วัดค่าความต้านทานขดลวดได้ประมาณ 8-15Ω',
+    cap: '🔵 <strong>คาปาซิเตอร์ (Capacitor)</strong> — สะสมและจ่ายกระแสให้ขดลวดสตาร์ท วัดค่าได้ประมาณ 15-35μF',
+    comp: '🔴 <strong>คอมเพรสเซอร์ (Compressor)</strong> — อัดสารทำความเย็น ใช้ไฟ 220V ดึงกระแสประมาณ 4-6A',
+    thermo: '🟢 <strong>เทอร์โมสตัท (Thermostat)</strong> — ควบคุมอุณหภูมิ ตัดวงจรเมื่ออุณหภูมิถึงค่าที่ตั้ง',
+  };
+  const el = document.getElementById('part-info');
+  if (el) el.innerHTML = info[part] || '';
+}
+
+// =====================================================
+// TABS
+// =====================================================
+function switchTab(btn, tabId) {
+  btn.closest('.lesson-layout, .page-content')?.querySelectorAll('.lesson-tab').forEach(t => t.classList.remove('active'));
+  btn.closest('.page-content')?.querySelectorAll('.lesson-tab-content').forEach(t => t.classList.remove('active'));
+  // Fallback: find tabs relative to btn
+  const wrap = btn.parentElement;
+  wrap?.querySelectorAll('.lesson-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  const content = document.getElementById(tabId);
+  if (content) {
+    // hide siblings
+    const allContents = content.parentElement.querySelectorAll('.lesson-tab-content');
+    allContents.forEach(c => c.classList.remove('active'));
+    content.classList.add('active');
+  }
+}
+
+// =====================================================
+// XP SYSTEM
+// =====================================================
+function showXP(amount) {
+  xp += amount;
+  // Update displays
+  const xpDisplay = document.getElementById('xp-display');
+  const lessonXp = document.getElementById('lesson-xp');
+  if (xpDisplay) xpDisplay.textContent = xp.toLocaleString();
+  if (lessonXp) lessonXp.textContent = xp.toLocaleString();
+  // Toast
+  const existing = document.querySelector('.xp-toast');
+  if (existing) existing.remove();
+  const toast = document.createElement('div');
+  toast.className = 'xp-toast';
+  toast.textContent = `+${amount} XP ⚡`;
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 3000);
+}
+
+// =====================================================
+// INIT
+// =====================================================
+function init() {
+  renderLeaderboardMini();
+  renderTopics();
+  renderQuiz();
+  // Progress bars animate in
+  setTimeout(() => {
+    document.querySelectorAll('.progress-fill').forEach(el => {
+      const w = el.style.width;
+      el.style.width = '0';
+      setTimeout(() => el.style.width = w, 100);
+    });
+  }, 200);
+}
+
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
