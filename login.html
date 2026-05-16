@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>เข้าสู่ระบบ — TechVoc LMS</title>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* =====================================================
+   TECHVOC LMS — login.html
+   หน้าเข้าสู่ระบบ สำหรับนักเรียนและครู
+   ===================================================== */
+:root {
+  --blue-400: #2196f3;
+  --blue-600: #1565c0;
+  --blue-800: #0d47a1;
+  --orange-400: #ff9800;
+  --orange-600: #e65100;
+  --green-400: #4caf50;
+  --green-600: #2e7d32;
+  --red-400: #f44336;
+  --bg-dark:  #080d1a;
+  --bg-panel: #0d1525;
+  --bg-card:  #111d36;
+  --bg-card2: #162140;
+  --border:   rgba(255,255,255,0.08);
+  --text-primary:   #e8edf8;
+  --text-secondary: #8fa8c8;
+  --text-muted:     #4a6080;
+  --font-main: 'Sarabun', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: var(--font-main);
+  background: var(--bg-dark);
+  color: var(--text-primary);
+  min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+}
+
+/* ── Animated background grid ── */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image:
+    linear-gradient(rgba(33,150,243,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(33,150,243,0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+}
+
+/* ── Glow blobs ── */
+.blob {
+  position: fixed; border-radius: 50%;
+  filter: blur(80px); pointer-events: none; z-index: 0;
+}
+.blob-1 { width:380px;height:380px;background:rgba(21,101,192,0.18);top:-80px;right:-80px; }
+.blob-2 { width:300px;height:300px;background:rgba(230,81,0,0.1);bottom:-60px;left:-60px; }
+
+/* ── Main card ── */
+.login-wrap {
+  position: relative; z-index: 10;
+  width: 100%; max-width: 440px;
+  padding: 16px;
+}
+
+.login-card {
+  background: var(--bg-panel);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.6), 0 0 0 1px rgba(33,150,243,0.08);
+  animation: cardIn 0.5s cubic-bezier(0.34,1.56,0.64,1);
+}
+
+@keyframes cardIn {
+  from { opacity:0; transform: translateY(30px) scale(0.97); }
+  to   { opacity:1; transform: translateY(0) scale(1); }
+}
+
+/* ── Card header / logo ── */
+.card-top {
+  background: linear-gradient(135deg, #0d1b3e 0%, #1a2d5a 100%);
+  padding: 28px 28px 24px;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+  position: relative; overflow: hidden;
+}
+.card-top::after {
+  content: '';
+  position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+  width: 200px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--blue-400), transparent);
+}
+
+.logo-wrap {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 64px; height: 64px; border-radius: 16px;
+  background: linear-gradient(135deg, var(--blue-800), var(--blue-400));
+  font-size: 2rem; margin-bottom: 14px;
+  box-shadow: 0 8px 24px rgba(33,150,243,0.35);
+}
+.card-top h1 { font-size: 1.25rem; font-weight: 800; letter-spacing: -0.3px; }
+.card-top p  { font-size: 0.8rem; color: var(--text-muted); margin-top: 5px; }
+
+/* ── Role tabs ── */
+.role-tabs {
+  display: grid; grid-template-columns: 1fr 1fr;
+  background: var(--bg-card2);
+  border-bottom: 1px solid var(--border);
+}
+.role-tab {
+  padding: 13px 16px; text-align: center;
+  font-size: 0.85rem; font-weight: 600;
+  cursor: pointer; color: var(--text-muted);
+  transition: all 0.2s ease; border: none; background: none;
+  font-family: var(--font-main);
+  display: flex; align-items: center; justify-content: center; gap: 7px;
+  border-bottom: 2px solid transparent;
+  position: relative;
+}
+.role-tab:hover { color: var(--text-secondary); }
+.role-tab.active { color: var(--blue-400); border-bottom-color: var(--blue-400); background: rgba(33,150,243,0.06); }
+.role-tab.active.teacher { color: var(--orange-400); border-bottom-color: var(--orange-400); background: rgba(255,152,0,0.06); }
+.role-icon { font-size: 1rem; }
+
+/* ── Form body ── */
+.card-body { padding: 26px 28px; }
+
+.form-group { margin-bottom: 16px; }
+.form-label {
+  display: block; font-size: 0.78rem; font-weight: 600;
+  color: var(--text-secondary); margin-bottom: 7px;
+  letter-spacing: 0.3px;
+}
+
+.input-wrap { position: relative; }
+.input-icon {
+  position: absolute; left: 13px; top: 50%; transform: translateY(-50%);
+  font-size: 1rem; color: var(--text-muted); pointer-events: none;
+  transition: color 0.2s;
+}
+.form-input {
+  width: 100%;
+  background: var(--bg-card2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  padding: 10px 14px 10px 40px;
+  outline: none;
+  transition: all 0.2s ease;
+  font-family: var(--font-main);
+}
+.form-input:focus {
+  border-color: var(--blue-400);
+  background: rgba(33,150,243,0.05);
+  box-shadow: 0 0 0 3px rgba(33,150,243,0.12);
+}
+.form-input:focus + .input-icon,
+.input-wrap:focus-within .input-icon { color: var(--blue-400); }
+.form-input::placeholder { color: var(--text-muted); }
+
+/* Password toggle */
+.pw-toggle {
+  position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+  background: none; border: none; color: var(--text-muted);
+  cursor: pointer; font-size: 0.9rem; padding: 4px;
+  transition: color 0.2s;
+}
+.pw-toggle:hover { color: var(--text-primary); }
+
+/* Teacher = orange theme for inputs */
+.teacher-active .form-input:focus {
+  border-color: var(--orange-400);
+  background: rgba(255,152,0,0.05);
+  box-shadow: 0 0 0 3px rgba(255,152,0,0.12);
+}
+.teacher-active .form-input:focus ~ .input-icon { color: var(--orange-400); }
+
+/* ── Login button ── */
+.btn-login {
+  width: 100%; padding: 12px;
+  border: none; border-radius: 8px;
+  font-family: var(--font-main); font-size: 0.95rem; font-weight: 700;
+  cursor: pointer; letter-spacing: 0.3px;
+  transition: all 0.2s ease; position: relative; overflow: hidden;
+  margin-top: 6px;
+}
+.btn-login.student-btn {
+  background: linear-gradient(135deg, var(--blue-600), var(--blue-400));
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(33,150,243,0.35);
+}
+.btn-login.teacher-btn {
+  background: linear-gradient(135deg, var(--orange-600), var(--orange-400));
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(255,152,0,0.3);
+}
+.btn-login:hover { transform: translateY(-1px); filter: brightness(1.1); }
+.btn-login:active { transform: scale(0.98); }
+.btn-login:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+/* Loading spinner */
+.btn-login .spinner {
+  display: none; width: 18px; height: 18px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: #fff; border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  margin: 0 auto;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.btn-login.loading .btn-text { display: none; }
+.btn-login.loading .spinner { display: block; }
+
+/* ── Error / success message ── */
+.alert {
+  display: none; padding: 10px 14px; border-radius: 8px;
+  font-size: 0.82rem; font-weight: 500; margin-bottom: 14px;
+  align-items: center; gap: 8px;
+}
+.alert.show { display: flex; animation: fadeIn 0.2s ease; }
+.alert-error   { background: rgba(244,67,54,0.1); border:1px solid rgba(244,67,54,0.25); color: #ef9a9a; }
+.alert-success { background: rgba(76,175,80,0.1);  border:1px solid rgba(76,175,80,0.25);  color: #a5d6a7; }
+
+@keyframes fadeIn { from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)} }
+
+/* ── Demo hint box ── */
+.demo-box {
+  background: var(--bg-card2); border: 1px solid var(--border);
+  border-radius: 8px; padding: 13px 14px; margin-top: 16px;
+}
+.demo-box-title { font-size: 0.72rem; font-weight: 700; color: var(--text-muted); margin-bottom: 8px; letter-spacing: 1px; text-transform: uppercase; }
+.demo-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 5px 0; font-size: 0.78rem;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.demo-row:last-child { border-bottom: none; }
+.demo-label { color: var(--text-muted); }
+.demo-val {
+  font-family: var(--font-mono); font-size: 0.72rem;
+  color: var(--blue-400); cursor: pointer;
+  background: rgba(33,150,243,0.1); padding: 2px 8px;
+  border-radius: 4px; border: 1px solid rgba(33,150,243,0.2);
+  transition: all 0.15s;
+}
+.demo-val:hover { background: rgba(33,150,243,0.2); }
+.demo-val.orange { color: var(--orange-400); background: rgba(255,152,0,0.1); border-color: rgba(255,152,0,0.2); }
+.demo-val.orange:hover { background: rgba(255,152,0,0.2); }
+
+/* ── Footer ── */
+.card-footer {
+  padding: 14px 28px;
+  background: var(--bg-card2);
+  border-top: 1px solid var(--border);
+  text-align: center; font-size: 0.72rem; color: var(--text-muted);
+}
+
+/* ── Forgot password ── */
+.forgot-link {
+  font-size: 0.75rem; color: var(--text-muted);
+  text-align: right; display: block; margin-top: 6px;
+  cursor: pointer; transition: color 0.2s;
+}
+.forgot-link:hover { color: var(--blue-400); }
+
+/* ── Responsive ── */
+@media (max-width: 480px) {
+  .login-wrap { padding: 12px; }
+  .card-top { padding: 22px 20px 18px; }
+  .card-body { padding: 20px; }
+}
+</style>
+</head>
+<body>
+
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+
+<div class="login-wrap">
+  <div class="login-card" id="login-card">
+
+    <!-- Logo / Header -->
+    <div class="card-top">
+      <div class="logo-wrap">❄️</div>
+      <h1>TechVoc LMS</h1>
+      <p>ระบบการเรียนรู้วิชาชีพ — ช่างแอร์และเครื่องทำความเย็น</p>
+    </div>
+
+    <!-- Role tabs -->
+    <div class="role-tabs">
+      <button class="role-tab active" id="tab-student" onclick="switchRole('student')">
+        <span class="role-icon">🎓</span> นักเรียน
+      </button>
+      <button class="role-tab" id="tab-teacher" onclick="switchRole('teacher')">
+        <span class="role-icon">👨‍🏫</span> ครูผู้สอน
+      </button>
+    </div>
+
+    <!-- Form body -->
+    <div class="card-body" id="card-body">
+
+      <!-- Alert box -->
+      <div class="alert alert-error" id="alert-error">
+        <span>⚠️</span>
+        <span id="alert-error-text">รหัสหรือรหัสผ่านไม่ถูกต้อง</span>
+      </div>
+      <div class="alert alert-success" id="alert-success">
+        <span>✅</span>
+        <span id="alert-success-text">เข้าสู่ระบบสำเร็จ กำลังเปลี่ยนหน้า...</span>
+      </div>
+
+      <!-- Student ID / Teacher ID -->
+      <div class="form-group">
+        <label class="form-label" id="id-label">รหัสนักเรียน</label>
+        <div class="input-wrap">
+          <input type="text" id="input-id" class="form-input"
+            placeholder="เช่น STD001"
+            autocomplete="username"
+            onkeydown="if(event.key==='Enter')document.getElementById('input-pw').focus()">
+          <span class="input-icon">🪪</span>
+        </div>
+      </div>
+
+      <!-- Password -->
+      <div class="form-group">
+        <label class="form-label">รหัสผ่าน</label>
+        <div class="input-wrap">
+          <input type="password" id="input-pw" class="form-input"
+            placeholder="กรอกรหัสผ่าน"
+            autocomplete="current-password"
+            onkeydown="if(event.key==='Enter')doLogin()">
+          <span class="input-icon">🔒</span>
+          <button class="pw-toggle" onclick="togglePassword()" title="แสดง/ซ่อนรหัสผ่าน">👁</button>
+        </div>
+        <span class="forgot-link" onclick="showForgot()">ลืมรหัสผ่าน?</span>
+      </div>
+
+      <!-- Login button -->
+      <button class="btn-login student-btn" id="btn-login" onclick="doLogin()">
+        <span class="btn-text" id="btn-text">🔑 เข้าสู่ระบบ</span>
+        <div class="spinner" id="btn-spinner"></div>
+      </button>
+
+      <!-- Demo credentials hint -->
+      <div class="demo-box" id="demo-box">
+        <div class="demo-box-title">🧪 บัญชีทดสอบ</div>
+
+        <!-- Student demo -->
+        <div id="demo-student">
+          <div class="demo-row">
+            <span class="demo-label">รหัสนักเรียน</span>
+            <span class="demo-val" onclick="fillDemo('STD001','student123')" title="คลิกเพื่อกรอกอัตโนมัติ">STD001</span>
+          </div>
+          <div class="demo-row">
+            <span class="demo-label">รหัสผ่าน</span>
+            <span class="demo-val" onclick="fillDemo('STD001','student123')">student123</span>
+          </div>
+          <div class="demo-row" style="margin-top:6px">
+            <span class="demo-label">รหัสนักเรียน 2</span>
+            <span class="demo-val" onclick="fillDemo('STD003','student123')">STD003</span>
+          </div>
+          <div class="demo-row">
+            <span class="demo-label">รหัสผ่าน</span>
+            <span class="demo-val" onclick="fillDemo('STD003','student123')">student123</span>
+          </div>
+        </div>
+
+        <!-- Teacher demo -->
+        <div id="demo-teacher" style="display:none">
+          <div class="demo-row">
+            <span class="demo-label">รหัสครู</span>
+            <span class="demo-val orange" onclick="fillDemo('TCH001','teacher123')">TCH001</span>
+          </div>
+          <div class="demo-row">
+            <span class="demo-label">รหัสผ่าน</span>
+            <span class="demo-val orange" onclick="fillDemo('TCH001','teacher123')">teacher123</span>
+          </div>
+        </div>
+
+        <div style="font-size:0.68rem;color:var(--text-muted);margin-top:8px">
+          💡 คลิกที่รหัสเพื่อกรอกอัตโนมัติ
+        </div>
+      </div>
+
+    </div><!-- end card-body -->
+
+    <div class="card-footer">
+      ปีการศึกษา 2568 • แผนกไฟฟ้ากำลัง • ปวช.1
+    </div>
+
+  </div>
+</div>
+
+<script>
+// =====================================================
+// CONFIG
+// =====================================================
+var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec';
+var currentRole = 'student';
+
+// =====================================================
+// LOCAL USER DATABASE (สำหรับทดสอบออฟไลน์)
+// เมื่อเชื่อม Google Sheets แล้ว ระบบจะใช้ข้อมูลจาก Sheets แทน
+// =====================================================
+var LOCAL_USERS = {
+  students: [
+    { id:'STD001', password:'student123', name:'นายสมชาย ใจดี',      section:'1/1', xp:2450, level:4 },
+    { id:'STD002', password:'student123', name:'นางสาวพิมพ์ใจ รัก',  section:'1/1', xp:2780, level:4 },
+    { id:'STD003', password:'student123', name:'นายประเสริฐ ดีมาก',  section:'1/1', xp:3420, level:5 },
+    { id:'STD004', password:'student123', name:'นางสาวสุดใจ มี',      section:'1/1', xp:1640, level:2 },
+    { id:'STD005', password:'student123', name:'นายวิชัย ชาญ',        section:'1/1', xp:3100, level:5 },
+    { id:'STD006', password:'student123', name:'นางสาวอรุณี สว่าง',   section:'1/1', xp:1200, level:2 },
+    { id:'STD007', password:'student123', name:'นายสิทธิชัย กล้า',    section:'1/1', xp:2200, level:3 },
+    { id:'STD008', password:'student123', name:'นางสาวรุ่งทิพย์ งาม', section:'1/1', xp:1950, level:3 },
+  ],
+  teachers: [
+    { id:'TCH001', password:'teacher123', name:'อาจารย์ประยูร มีชัย', subject:'ช่างแอร์และเครื่องทำความเย็น' },
+    { id:'TCH002', password:'teacher123', name:'อาจารย์สมศักดิ์ ดี',  subject:'ไฟฟ้ากำลัง' },
+  ],
+};
+
+// =====================================================
+// ROLE SWITCH
+// =====================================================
+function switchRole(role) {
+  currentRole = role;
+
+  // Tabs
+  document.getElementById('tab-student').classList.toggle('active', role === 'student');
+  document.getElementById('tab-teacher').classList.toggle('active', role === 'teacher');
+  document.getElementById('tab-teacher').classList.toggle('teacher', role === 'teacher');
+
+  // Labels & placeholder
+  var idLabel = document.getElementById('id-label');
+  var inputId = document.getElementById('input-id');
+  var btnLogin = document.getElementById('btn-login');
+  var btnText  = document.getElementById('btn-text');
+  var body     = document.getElementById('card-body');
+
+  if (role === 'teacher') {
+    idLabel.textContent = 'รหัสครูผู้สอน';
+    inputId.placeholder = 'เช่น TCH001';
+    btnLogin.className = 'btn-login teacher-btn';
+    btnText.textContent = '🔑 เข้าสู่ระบบ (ครู)';
+    body.classList.add('teacher-active');
+    document.getElementById('demo-student').style.display = 'none';
+    document.getElementById('demo-teacher').style.display = 'block';
+  } else {
+    idLabel.textContent = 'รหัสนักเรียน';
+    inputId.placeholder = 'เช่น STD001';
+    btnLogin.className = 'btn-login student-btn';
+    btnText.textContent = '🔑 เข้าสู่ระบบ';
+    body.classList.remove('teacher-active');
+    document.getElementById('demo-student').style.display = 'block';
+    document.getElementById('demo-teacher').style.display = 'none';
+  }
+
+  // Clear fields & alerts
+  document.getElementById('input-id').value = '';
+  document.getElementById('input-pw').value = '';
+  hideAlerts();
+}
+
+// =====================================================
+// FILL DEMO CREDENTIALS
+// =====================================================
+function fillDemo(id, pw) {
+  document.getElementById('input-id').value = id;
+  document.getElementById('input-pw').value = pw;
+  document.getElementById('input-id').focus();
+}
+
+// =====================================================
+// TOGGLE PASSWORD VISIBILITY
+// =====================================================
+function togglePassword() {
+  var input = document.getElementById('input-pw');
+  input.type = input.type === 'password' ? 'text' : 'password';
+}
+
+// =====================================================
+// ALERTS
+// =====================================================
+function showError(msg) {
+  document.getElementById('alert-error-text').textContent = msg;
+  document.getElementById('alert-error').classList.add('show');
+  document.getElementById('alert-success').classList.remove('show');
+}
+function showSuccess(msg) {
+  document.getElementById('alert-success-text').textContent = msg;
+  document.getElementById('alert-success').classList.add('show');
+  document.getElementById('alert-error').classList.remove('show');
+}
+function hideAlerts() {
+  document.getElementById('alert-error').classList.remove('show');
+  document.getElementById('alert-success').classList.remove('show');
+}
+
+// =====================================================
+// MAIN LOGIN FUNCTION
+// =====================================================
+async function doLogin() {
+  var userId   = document.getElementById('input-id').value.trim();
+  var password = document.getElementById('input-pw').value;
+  hideAlerts();
+
+  // Validate
+  if (!userId)   { showError('กรุณากรอกรหัส' + (currentRole === 'teacher' ? 'ครู' : 'นักเรียน')); return; }
+  if (!password) { showError('กรุณากรอกรหัสผ่าน'); return; }
+
+  // Loading state
+  var btn = document.getElementById('btn-login');
+  btn.disabled = true;
+  btn.classList.add('loading');
+
+  // Try Google Sheets API first, fallback to local
+  var result = null;
+  try {
+    result = await loginWithAPI(userId, password);
+  } catch (_) {
+    result = loginLocal(userId, password);
+  }
+
+  btn.disabled = false;
+  btn.classList.remove('loading');
+
+  if (result.success) {
+    handleLoginSuccess(result);
+  } else {
+    showError(result.error || 'รหัสหรือรหัสผ่านไม่ถูกต้อง กรุณาลองใหม่');
+    document.getElementById('input-pw').value = '';
+    document.getElementById('input-pw').focus();
+  }
+}
+
+// ── Call Google Apps Script API ──
+async function loginWithAPI(userId, password) {
+  if (APPS_SCRIPT_URL.includes('YOUR_DEPLOYMENT_ID')) {
+    throw new Error('API not configured');
+  }
+  var res = await fetch(APPS_SCRIPT_URL, {
+    method: 'POST',
+    body: JSON.stringify({ action: 'login', studentId: userId, password: password }),
+    headers: { 'Content-Type': 'application/json' },
+  });
+  return await res.json();
+}
+
+// ── Fallback: local lookup ──
+function loginLocal(userId, password) {
+  var list = currentRole === 'teacher' ? LOCAL_USERS.teachers : LOCAL_USERS.students;
+  var user = list.find(function(u) { return u.id === userId && u.password === password; });
+  if (user) return { success: true, role: currentRole, user: user };
+  return { success: false, error: 'รหัสหรือรหัสผ่านไม่ถูกต้อง' };
+}
+
+// =====================================================
+// HANDLE SUCCESSFUL LOGIN
+// =====================================================
+function handleLoginSuccess(result) {
+  var user = result.user;
+  var role = result.role || currentRole;
+
+  // Save to sessionStorage
+  sessionStorage.setItem('lms_user', JSON.stringify({
+    id:   user.id || user.studentId || user.teacherId,
+    name: user.name,
+    role: role,
+    xp:   user.xp   || 0,
+    level:user.level || 1,
+    section: user.section || '',
+    subject: user.subject || '',
+    loginAt: new Date().toISOString(),
+  }));
+
+  showSuccess('เข้าสู่ระบบสำเร็จ! กำลังเปลี่ยนหน้า...');
+
+  // Redirect after 1.2 sec
+  setTimeout(function() {
+    if (role === 'teacher') {
+      window.location.href = 'index.html#admin';
+    } else {
+      window.location.href = 'index.html#dashboard';
+    }
+  }, 1200);
+}
+
+// =====================================================
+// FORGOT PASSWORD
+// =====================================================
+function showForgot() {
+  alert('กรุณาติดต่อครูผู้สอนเพื่อรีเซ็ตรหัสผ่าน\nหรือส่งอีเมลมาที่: teacher@school.ac.th');
+}
+
+// =====================================================
+// AUTO-FILL if already logged in
+// =====================================================
+(function checkSession() {
+  var saved = sessionStorage.getItem('lms_user');
+  if (saved) {
+    try {
+      var u = JSON.parse(saved);
+      if (u && u.id && u.role) {
+        // Already logged in — redirect
+        window.location.href = u.role === 'teacher' ? 'index.html#admin' : 'index.html#dashboard';
+      }
+    } catch (_) {}
+  }
+})();
+</script>
+</body>
+</html>
