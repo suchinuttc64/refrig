@@ -10,7 +10,7 @@
 // CONFIGURATION
 // =====================================================
 const CONFIG = {
-  APPS_SCRIPT_URL: 'https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec',
+  APPS_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbzNR9NSAVcGX0zUil1jprat4YY7uCdQeoz4ErWKgJmEOIvzuIBjG-OfpCHWL_N1nlYB/exec',
   VERSION: '2.1.0',
   XP_REWARDS: {
     watchVideo:     25,
