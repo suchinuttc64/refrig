@@ -2612,6 +2612,10 @@ function init() {
 }
 
 document.addEventListener('DOMContentLoaded', init);
-</script>
+//  <!-- Scripts — เรียงลำดับนี้เท่านั้น -->
+<script src="app.js"></script>    <!-- ต้องมาก่อน -->
+<script src="admin.js"></script>  <!-- ต้องมาก่อน -->
+<script src="auth.js"></script>   <!-- มาหลังสุด -->
+
 </body>
 </html>
